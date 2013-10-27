@@ -1,0 +1,28 @@
+html { overflow: hidden; }
+body { overflow: hidden; font-family: 'Calibri'; min-width: 400px; background-color: #141414; color: #2b2b2b; margin: 0; }
+
+header {}
+header>header { background-color: #1F1F1F; width: 100%; }
+header>header>img { margin: 0 auto; display: block;}
+
+.region-selection { padding: 7px; text-align: center; }
+.region-selection>a { color: #4d4d4d; text-decoration: none; }
+.region-selection>a.selected { color: white; }
+.region-selection>a:hover { text-decoration: none; color: white; }
+
+.summoner-selection { height: 40px; background-color: #292929; }
+.summoner-selection>input,
+.summoner-selection>select { background-color: #333; }
+.summoner-selection>select { color: #c4b14e; }
+
+.map-information { margin: 5px; background-color: #292929; color: #808080; height: 20px; }
+.map-name, .game-type, .game-mode { float: left; text-align: center; }
+.map-name { width: 195px; }
+.game-type { width: 100px; }
+.game-mode { width: 95px; }
+
+.content { margin-top: 4px; position: relative; }
+.content>ul { width: 185px; display: inline-block; margin: 4px; padding: 0; }
+.content>ul>li { list-style: none; background-color: #1F1F1F; border: 1px solid black; }
+
+footer { font-size: 14px; background-color: #292929; color: #808080; text-align: center; padding: 4px 0 6px; }

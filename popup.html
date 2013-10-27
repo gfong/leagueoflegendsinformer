@@ -1,0 +1,119 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>League of Legends Informer</title>
+    <link href="style.css" rel="stylesheet" />
+  </head>
+  <body>
+
+  	<header>
+      <header>
+        <img src="images/logo.png" alt="League of Legends Informer Logo" />
+      </header>
+
+      <section class='region-selection'>
+        <a href='#' class='selected'>NA</a> | 
+        <a href='#'>EUW</a> | 
+        <a href='#'>EUNE</a> | 
+        <a href='#'>BR</a> | 
+        <a href='#'>TR</a> | 
+        <a href='#'>RU</a> | 
+        <a href='#'>LAN</a> | 
+        <a href='#'>LAS</a> | 
+        <a href='#'>OCE</a>
+      </section>
+      
+      <section class='summoner-selection'>
+        <select>
+          <option value='Soul of Ryuk'>Soul of Ryuk</option>
+        </select>
+        <input type='text' placeholder='Add Summoner' />
+      </section>
+      
+      <section class='map-information'>
+        <div class='map-name'>Summoner's Rift</div>
+        <div class='game-type'>Normal</div>
+        <div class='game-mode'>Draft Pick</div>
+      </section>
+      
+      <section class='display-controls'>
+        <section>
+          <button>Simple</button>
+          <button>Detailed</button>
+        </section>
+        
+        <button>Premades</button>
+        <button>Builds</button>
+      </section>
+    </header>
+  	
+    <section class='content'>
+      <ul class='blue-team'>
+        <li>
+          <header>
+            <div class='summoner-name'>Soul of Ryuk</div>
+            <div class='rank'>Gold IV</div>
+          </header>
+          <section class='summoner-stats'>
+            <div class='level'>
+              LV30
+            </div>
+            <div class='wins'>
+              W539
+            </div>
+            <section class='ranked-win-loss-ratio'>
+              <div class='wins'>
+                W230
+              </div>
+              /
+              <div class='losses'>
+                L214
+              </div>
+            </section>
+          </section>
+          <section class='champion-stats'>
+            <img />
+            <header></header>
+          </section>
+        </li>
+      </ul>
+      <ul class='purple-team'>
+        <li>
+          <header>
+            <div class='summoner-name'>sneakee</div>
+            <div class='rank'>Challenger</div>
+          </header>
+          <section class='summoner-stats'>
+            <div class='level'>
+              LV30
+            </div>
+            <div class='wins'>
+              W1831
+            </div>
+            <section class='ranked-win-loss-ratio'>
+              <div class='wins'>
+                W362
+              </div>
+              /
+              <div class='losses'>
+                L110
+              </div>
+            </section>
+          </section>
+          <section class='champion-stats'>
+            <img />
+            <header></header>
+          </section>
+        </li>
+      </ul>
+    </section>
+  	
+    <footer>
+      &copy; 2013 Neumont University | Gregory Fong
+    </footer>
+    <script src="js/jquery-1.10.2.js"></script>
+    <script src="js/popup.js"></script>
+  </body>
+</html>
+
