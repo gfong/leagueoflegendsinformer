@@ -1,3 +1,7 @@
+/**
+* Generates HTML for League of Legends Informer
+*/
+
 universe.generateHtmlForSummonerHeader = function(summoner) {
 	var name = "<div class='summoner-name'>" + summoner.name + "</div>";
 	var rank = "<div class='rank'>" + summoner.rank + "</div>";
@@ -19,24 +23,26 @@ universe.generateHtmlForSummonerChampionStatsHeader = function(summoner) {
 	var championName = "<div class='champion-name'>" + summoner.currentChampionStats.name + "</div>";
 	var buildsButton  = "<button>Builds</button>";
 	return "<header>" + championName + buildsButton + "</header>";
-}
+};
 
 universe.generateHtmlForSummonerChampionStatsContent = function(summoner) {
 	var playedRank = "<div class='played-rank'>" + summoner.currentChampionStats.playedRank +"</div>";
 	var rankedWins = "W" + summoner.currentChampionStats.wins;
 	var rankedLosses = "L" + summoner.currentChampionStats.losses;
 	var rankedWinLossRatio = "<div class='ranked-win-loss-ratio'>" + rankedWins + "/" + rankedLosses + "</div>";
-	var kills = summoner.currentChampionStats.kills;
-	var deaths = summoner.currentChampionStats.deaths;
-	var assists = summoner.currentChampionStats.assists;
+	var kda = summoner.currentChampionStats.kda;
+	var kills = kda.kills;
+	var deaths = kda.deaths;
+	var assists = kda.assists;
 	var kdaRatio = "<div class='kda-ratio'>" + kills + "/" + deaths + "/" + assists + "</div>";
 	var creepScore = "<div class='creep-score'" + summoner.currentChampionStats.creepScore + "</div>";
 	return "<section>" + playedRank + rankedWinLossRatio + kdaRatio + creepScore + "</section>";
-}
+};
 
 universe.generateHtmlForSummonerChampionStats = function(summoner) {
 	var championName = summoner.currentChampionStats.name;
-	var icon = "<img src='images/" + championName + "-icon.png'" + " alt='" + championName + "icon' />";
+	var championId = summoner.currentChampionStats.id;
+	var icon = "<img src='images/champ-icons/" + championId + "_Web_0.jpg'" + " alt='" + championName + "icon' />";
 	var header = universe.generateHtmlForSummonerChampionStatsHeader(summoner);
 	var content = universe.generateHtmlForSummonerChampionStatsContent(summoner);
 	return "<section class='champion-stats'>" + icon + header + content + "</section>"; 
