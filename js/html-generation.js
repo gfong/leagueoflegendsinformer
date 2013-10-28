@@ -26,23 +26,24 @@ universe.generateHtmlForSummonerChampionStatsHeader = function(summoner) {
 };
 
 universe.generateHtmlForSummonerChampionStatsContent = function(summoner) {
-	var playedRank = "<div class='played-rank'>" + summoner.currentChampionStats.playedRank +"</div>";
-	var rankedWins = "W" + summoner.currentChampionStats.wins;
-	var rankedLosses = "L" + summoner.currentChampionStats.losses;
+	var stats = summoner.currentChampionStats;
+	var playedRank = "<div class='played-rank'>" + stats.playedRank +"</div>";
+	var rankedWins = "W" + stats.wins;
+	var rankedLosses = "L" + stats.losses;
 	var rankedWinLossRatio = "<div class='ranked-win-loss-ratio'>" + rankedWins + "/" + rankedLosses + "</div>";
-	var kda = summoner.currentChampionStats.kda;
+	var kda = stats.kda;
 	var kills = kda.kills;
 	var deaths = kda.deaths;
 	var assists = kda.assists;
 	var kdaRatio = "<div class='kda-ratio'>" + kills + "/" + deaths + "/" + assists + "</div>";
-	var creepScore = "<div class='creep-score'" + summoner.currentChampionStats.creepScore + "</div>";
+	var creepScore = "<div class='creep-score'>" + stats.creepScore + "</div>";
 	return "<section>" + playedRank + rankedWinLossRatio + kdaRatio + creepScore + "</section>";
 };
 
 universe.generateHtmlForSummonerChampionStats = function(summoner) {
 	var championName = summoner.currentChampionStats.name;
 	var championId = summoner.currentChampionStats.id;
-	var icon = "<img src='images/champ-icons/" + championId + "_Web_0.jpg'" + " alt='" + championName + "icon' />";
+	var icon = "<img src='images/champ-icons/" + championId + "_Web_0.jpg'" + " alt='" + championName + " icon' />";
 	var header = universe.generateHtmlForSummonerChampionStatsHeader(summoner);
 	var content = universe.generateHtmlForSummonerChampionStatsContent(summoner);
 	return "<section class='champion-stats'>" + icon + header + content + "</section>"; 

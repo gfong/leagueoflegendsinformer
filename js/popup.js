@@ -37,4 +37,8 @@ $(document).ready(function() {
 	var blueHtml = universe.generateHtmlForTeam(blue);
 	$(".blue-team").html(blueHtml);
 	console.log('here');
+
+	$("select").mouseover(function() {
+		$("html").css("margin-right", 0);
+	});
 });
