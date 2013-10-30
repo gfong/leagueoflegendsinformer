@@ -1,4 +1,4 @@
-html { overflow: hidden; margin-right: 18px; }
+html { overflow: hidden; }
 body { overflow: hidden; font-family: 'Calibri'; min-width: 400px; background-color: #141414; color: #2b2b2b; margin: 0; }
 
 header {}
@@ -18,13 +18,13 @@ header>header>img { margin: 2px auto; display: block;}
 .summoner-selection>select:hover,
 .summoner-selection>input:hover { border: 1px solid #c4b14e; }
 
-.summoner-selection>input[type=text] { margin: 5px 0 5px 2px; text-indent: 3px; width: 166px; }
+.summoner-selection>input[type=text] { margin: 5px 0 5px 2px; text-indent: 3px; width: 162px; }
 .summoner-selection>input::-webkit-input-placeholder { color: #666; }
 .summoner-selection>input:-moz-placeholder { color: #666; }
 .summoner-selection>input::-moz-placeholder { color: #666; }
 .summoner-selection>input:-ms-input-placeholder { color: #666; }
 
-.summoner-selection>select { width: 185px; margin: 5px; }
+.summoner-selection>select { width: 190px; margin: 5px; }
 .summoner-selection>input[type=submit] { margin: 0; }
 
 /* Map Information */
@@ -83,3 +83,4 @@ header>header>img { margin: 2px auto; display: block;}
 .purple-team .champion-stats>img { border: 1px solid #9169d7; }
 
 footer { margin-top: 5px; font-size: 14px; background-color: #292929; color: #808080; text-align: center; padding: 4px 0 6px; }
+.hidden {  }

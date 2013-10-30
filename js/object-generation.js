@@ -1,8 +1,8 @@
 /**
 * Generates a KDA object with the given kills, deaths, and assists.
 */
-universe.generateKDA = function(kills, deaths, assists) {
-	var kda = universe.objectBuilder(universe.kda);
+model.generateKDA = function(kills, deaths, assists) {
+	var kda = objectBuilder(model.kda);
 	kda.kills = kills;
 	kda.deaths = deaths;
 	kda.assists = assists;
@@ -12,8 +12,8 @@ universe.generateKDA = function(kills, deaths, assists) {
 /**
 * Generates a ChampionStats object with no ranked stats.
 */
-universe.generateChampionStats = function(id, name) {
-	var stats = universe.objectBuilder(universe.championStats);
+model.generateChampionStats = function(id, name) {
+	var stats = objectBuilder(model.championStats);
 	stats.id = id;
 	stats.name = name;
 	return stats;
@@ -22,8 +22,8 @@ universe.generateChampionStats = function(id, name) {
 /**
 * Generates a ChampionStats object with ranked stats.
 */
-universe.generateChampionStats = function(id, name, playedRank, wins, losses, kda, creepScore) {
-	var stats = universe.objectBuilder(universe.championStats);
+model.generateChampionStats = function(id, name, playedRank, wins, losses, kda, creepScore) {
+	var stats = objectBuilder(model.championStats);
 	stats.id = id;
 	stats.name = name;
 	stats.playedRank = playedRank;
@@ -37,8 +37,8 @@ universe.generateChampionStats = function(id, name, playedRank, wins, losses, kd
 /**
 * Generates a SummonerStats object.
 */
-universe.generateSummonerStats = function(name, level, normalWins, rank, rankedWins, rankedLosses, championStats) {
-	var stats = universe.objectBuilder(universe.summonerStats);
+model.generateSummonerStats = function(name, level, normalWins, rank, rankedWins, rankedLosses, championStats) {
+	var stats = objectBuilder(model.summonerStats);
 	stats.name = name;
 	stats.level = level;
 	stats.normalWins = normalWins;

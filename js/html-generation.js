@@ -2,64 +2,78 @@
 * Generates HTML for League of Legends Informer
 */
 
-universe.generateHtmlForSummonerHeader = function(summoner) {
-	var name = "<div class='summoner-name'>" + summoner.name + "</div>";
-	var rank = "<div class='rank'>" + summoner.rank + "</div>";
-	return "<header>" + name + rank + "</header>";
+var view = { };
+
+view.templates = { };
+view.templates.summoner = 'templates/_summoner.html';
+
+view.loadTemplate = function(url, callback) {
+	$.get(url, callback);
 };
 
-universe.generateHtmlForSummonerStats = function(summoner) {
-	var level = "<div class='level'>LV" + summoner.level + "</div>";
-	var normalWins = "<div class='wins'>" + summoner.normalWins + "</div>";
-
-	var rankedWins = "<div class='wins'>" + summoner.rankedWins + "</div>";
-	var rankedLosses = "<div class='losses'" + summoner.rankedLosses + "</div>";
-
-	var rankedWinLossRatio = "<section class='ranked-win-loss-ratio'>" + rankedWins + "/" + rankedLosses + "</section>";
-	return "<section class='summoner-stats'>" + level + normalWins + rankedWinLossRatio + "</section>";
+view.setTemplateData = function(template, styleClass, data) {
+	$(template).find(styleClass).html(data);
 };
 
-universe.generateHtmlForSummonerChampionStatsHeader = function(summoner) {
-	var championName = "<div class='champion-name'>" + summoner.currentChampionStats.name + "</div>";
-	var buildsButton  = "<button>Builds</button>";
-	return "<header>" + championName + buildsButton + "</header>";
+/**
+* Used for changing attributes of a class
+*/
+view.setTemplateAttribute = function(template, styleClass, attr, val) {
+	$(template).find(styleClass).attr(attr, val);
+}
+
+view.generateHtmlForSummonerHeader = function(template, summoner) {
+	view.setTemplateData(template, '.summoner-name', summoner.name);
+	view.setTemplateData(template, '.rank', summoner.rank);
 };
 
-universe.generateHtmlForSummonerChampionStatsContent = function(summoner) {
+view.generateHtmlForSummonerStats = function(template, summoner) {
+	view.setTemplateData(template, '.level', 'LV' + summoner.level);
+	view.setTemplateData(template, '.wins.normal', summoner.normalWins);
+	view.setTemplateData(template, '.wins.ranked', summoner.rankedWins);
+	view.setTemplateData(template, '.wins.losses', summoner.rankedLosses);
+};
+
+view.generateHtmlForSummonerChampionStatsHeader = function(template, summoner) {
+	var name = summoner.currentChampionStats.name;
+	view.setTemplateData(template, '.champion-name', name);	
+};
+
+view.generateHtmlForSummonerChampionStatsContent = function(template, summoner) {
 	var stats = summoner.currentChampionStats;
-	var playedRank = "<div class='played-rank'>" + stats.playedRank +"</div>";
-	var rankedWins = "W" + stats.wins;
-	var rankedLosses = "L" + stats.losses;
-	var rankedWinLossRatio = "<div class='ranked-win-loss-ratio'>" + rankedWins + "/" + rankedLosses + "</div>";
+	view.setTemplateData(template, '.played-rank', stats.playedRank);
+	var rankedWinLossRatio = 'W' + stats.wins + '/' + 'L' + stats.losses;
+	view.setTemplateData(template, '.ranked-win-loss-ratio', rankedWinLossRatio);
 	var kda = stats.kda;
-	var kills = kda.kills;
-	var deaths = kda.deaths;
-	var assists = kda.assists;
-	var kdaRatio = "<div class='kda-ratio'>" + kills + "/" + deaths + "/" + assists + "</div>";
-	var creepScore = "<div class='creep-score'>" + stats.creepScore + "</div>";
-	return "<section>" + playedRank + rankedWinLossRatio + kdaRatio + creepScore + "</section>";
+	var kdaText = kda.kills + '/' + kda.deaths + '/' + kda.assists;
+	view.setTemplateData(template, '.kda-ratio', kdaText);
+	view.setTemplateData(template, '.creep-score', stats.creepScore);
 };
 
-universe.generateHtmlForSummonerChampionStats = function(summoner) {
+view.generateHtmlForSummonerChampionStats = function(template, summoner) {
 	var championName = summoner.currentChampionStats.name;
 	var championId = summoner.currentChampionStats.id;
-	var icon = "<img src='images/champ-icons/" + championId + "_Web_0.jpg'" + " alt='" + championName + " icon' />";
-	var header = universe.generateHtmlForSummonerChampionStatsHeader(summoner);
-	var content = universe.generateHtmlForSummonerChampionStatsContent(summoner);
-	return "<section class='champion-stats'>" + icon + header + content + "</section>"; 
+	var imagePath = 'images/champ-icons/' + championId + "_Web_0.jpg";
+	var altText = championName + ' icon';
+	view.setTemplateAttribute(template, '.icon', 'src', imagePath);
+	view.setTemplateAttribute(template, '.icon', 'alt', altText);
+	view.generateHtmlForSummonerChampionStatsHeader(template, summoner);
+	view.generateHtmlForSummonerChampionStatsContent(template, summoner);
 };
 
-universe.generateHtmlForSummoner = function(summoner) {
-	var header = universe.generateHtmlForSummonerHeader(summoner);
-	var summonerStats = universe.generateHtmlForSummonerStats(summoner);
-	var championStats = universe.generateHtmlForSummonerChampionStats(summoner);
-	return "<li>" + header + summonerStats + championStats + "</li>";
+view.generateHtmlForSummoner = function(teamColor, summoner) {
+	view.loadTemplate(view.templates.summoner, function(data, status) {
+		var template = $(data);
+		view.generateHtmlForSummonerHeader(template, summoner);
+		view.generateHtmlForSummonerStats(template, summoner);
+		view.generateHtmlForSummonerChampionStats(template, summoner);
+		$('.' + teamColor).append(template);
+	});
 };
 
-universe.generateHtmlForTeam = function(team) {
-	var html = "";
+view.generateHtmlForTeam = function(teamColor, team) {
 	for (var i = 0 ; i < team.length; i++) {
-		html += universe.generateHtmlForSummoner(team[i]);
+		var summoner = team[i];
+		view.generateHtmlForSummoner(teamColor, summoner);
 	}
-	return html;
 };
