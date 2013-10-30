@@ -13,18 +13,18 @@ header>header>img { margin: 2px auto; display: block;}
 /* Summoner Selection */
 .summoner-selection { }
 .summoner-selection>select,
-.summoner-selection>input { background-color: #333; border: 1px solid black; color: #c4b14e; }
+.summoner-selection>input { background-color: #333; border: 1px solid #111; border-right-color: #444; border-bottom-color: #444; color: #c4b14e; }
 
 .summoner-selection>select:hover,
 .summoner-selection>input:hover { border: 1px solid #c4b14e; }
 
-.summoner-selection>input[type=text] { margin: 5px 0 5px 2px; text-indent: 3px; width: 162px; }
+.summoner-selection>input[type=text] { margin: 5px 0 5px 0; text-indent: 3px; width: 164px; }
 .summoner-selection>input::-webkit-input-placeholder { color: #666; }
 .summoner-selection>input:-moz-placeholder { color: #666; }
 .summoner-selection>input::-moz-placeholder { color: #666; }
 .summoner-selection>input:-ms-input-placeholder { color: #666; }
 
-.summoner-selection>select { width: 190px; margin: 5px; }
+.summoner-selection>select { width: 193px; margin: 4px; margin-right: 2px; }
 .summoner-selection>input[type=submit] { margin: 0; }
 
 /* Map Information */
@@ -37,18 +37,20 @@ header>header>img { margin: 2px auto; display: block;}
 /* Display Controls */
 .display-controls { padding: 0 5px; }
 
-.display-controls>section { display: inline-block; background-color: #1c1c1c; margin-right: 10px; }
-.display-controls>section>button { width: 92px; margin: 0; }
+.display-controls>section { display: inline-block; background-color: #1c1c1c; margin-right: 4px; }
+.display-controls>section>button { width: 94px; margin: 0; }
 .display-controls>section>button.detailed { }
 
-.display-controls button { margin-bottom: 0; display: inline-block; font-size: 12px; text-transform: uppercase; padding: 3px 0 4px; text-align: center; color: #4d4d4d; background-color: #1c1c1c; border: 0; }
+.display-controls button { margin-bottom: 0; display: inline-block; font-size: 12px; text-transform: uppercase; padding: 3px 0 4px; text-align: center; color: #636363; background-color: #1c1c1c; border: 0; }
 .display-controls button.selected, 
-.display-controls button:hover { color: white; }
-.display-controls>button { width: 92px; }
+.display-controls button:hover { color: white; background-color: #292929; }
+.display-controls>button { width: 93px; }
+
+.display-controls button.detailed { margin-left: -1px; }
 
 /* Content */
 .content { position: relative; color: #808080 }
-.content>ul { width: 190px; display: inline-block; margin: 0 4px; padding: 0; }
+.content>ul { width: 193px; display: inline-block; margin: 0 4px; padding: 0; }
 .content>ul>li { margin-top: 5px; list-style: none; background-color: #1F1F1F; border: 1px solid black; }
 .content>ul>li header { background-color: #333333; padding: 0 3px; font-size: 14px; }
 
@@ -57,17 +59,18 @@ header>header>img { margin: 2px auto; display: block;}
 
 .summoner-stats { height: 18px; font-size: 14px; padding: 0 3px; }
 .level, .wins, .losses, .ranked-win-loss-ratio { display: inline-block; }
-.wins { margin: 0 5px; }
+.wins { margin: 0 6px; }
+.ranked-win-loss-ratio { float: right; }
 
-.champion-stats { font-size: 12px; }
+.champion-stats { font-size: 11px; }
 
 .champion-stats>img { width: 39px; height: 39px; float: left; }
 
-.champion-stats>header { height: 15px; }
+.champion-stats>header { height: 15px; display: inline-block; width: 144px; }
 .champion-stats>header>.champion-name { color: #c4b14e; display: inline-block; color: ;}
-.champion-stats>header>button { float: right; display: inline-block; font-size: 9px; text-transform: uppercase; padding: 1px 3px 0; color: #999; background: none; border-width: 1px; } 
+.champion-stats>header>button { border-color: #999 #666 #666 #999; float: right; display: inline-block; font-size: 9px; text-transform: uppercase; padding: 1px 3px 0; color: #999; background: none; border-width: 1px; } 
 
-.champion-stats>section { height: 27px; padding: 0 3px; }
+.champion-stats>section { width: 144px; display:inline-block; padding: 0 3px; }
 .champion-stats .played-rank, .champion-stats .ranked-win-loss-ratio, .champion-stats .kda-ratio,
 .champion-stats .creep-score { display: inline-block; }
 
@@ -76,11 +79,13 @@ header>header>img { margin: 2px auto; display: block;}
 .champion-stats .kda-ratio { }
 .champion-stats .creep-score { float: right; }
 
-.blue-team .summoner-name { color: #6490d7;}
-.blue-team .champion-stats>img { border: 1px solid #6490d7; }
+ul.blue-team { margin-right: 1px; }
+ul.blue-team .summoner-name { color: #6490d7;}
+ul.blue-team .champion-stats>img { border: 1px solid #6490d7; }
 
-.purple-team .summoner-name { color: #9169d7; }
-.purple-team .champion-stats>img { border: 1px solid #9169d7; }
+ul.purple-team { margin-left: 1px; }
+ul.purple-team .summoner-name { color: #B199FA; }
+ul.purple-team .champion-stats>img { border: 1px solid #B199FA; }
 
 footer { margin-top: 5px; font-size: 14px; background-color: #292929; color: #808080; text-align: center; padding: 4px 0 6px; }
 .hidden {  }

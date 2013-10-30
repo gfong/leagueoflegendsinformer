@@ -15,7 +15,12 @@ externals.loadRegions = function() {
 
 };
 
-externals.checkIfSummonerExists = function(region, summoner) {
+/**
+* Checks if a summoner exists for a region.
+* Success callback: (region, summoner)
+* Failure callback: (region, summoner)
+*/
+externals.checkIfSummonerExists = function(region, summoner, successCB, failCB) {
 	var editedName = summoner.split(' ').join('+');
 	// console.log("edited name: " + editedName);
 	var searchURL = externals.lolkingURL + 'search?name=' + editedName;
@@ -25,7 +30,8 @@ externals.checkIfSummonerExists = function(region, summoner) {
 		// console.log("lolkingResults: " + lolkingSearchResults.toString());
 		var regionName = universe.servers[region].name;
 		// console.log("regionName: " + regionName);
-		var resultDivs = $(lolkingSearchResults).find('.search_result_item>div>div:nth-child(1)');
+		var resultsFind = '.search_result_item>div>div:nth-child(1)';
+		var resultDivs = $(lolkingSearchResults).find(resultsFind);
 		var foundSummoner = false;
 		for (var i = 0; !foundSummoner && i < resultDivs.length; i++) {
 			if (resultDivs[i].innerHTML === regionName) {
@@ -33,9 +39,10 @@ externals.checkIfSummonerExists = function(region, summoner) {
 			}
 		}
 		if (foundSummoner) {
-			storage.storeSummoner(region, summoner);
+			successCB(region, summoner);
 			alert(summoner + ' has been successfully added to ' + regionName + ' list!');
 		} else {
+			failCB(region, summoner);
 			alert('Cannot find summoner ' + summoner + ' in ' + regionName + '!');
 		}
 	});

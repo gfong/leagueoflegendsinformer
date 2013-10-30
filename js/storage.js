@@ -1,19 +1,33 @@
+/**
+* Functions for manipulating the Chrome storage namespaces.
+*/
 var storage = { }
 
 storage.keys = { };
 storage.keys.regions = 'regions';
 
-storage.load = function(region) {
-	storage.loadSummoners(region);
+storage.get = function(item, callback) {
+	chrome.storage.local.get(item, callback);
+};
+
+storage.set = function(keyPair) {
+	chrome.storage.local.set(keyPair, function() {
+		for (key in keyPair) {
+			console.log('Set ' + key + ' as value ' + keyPair[key]);
+		}
+	});
+}
+
+storage.load = function(defaultRegion) {
+	storage.loadSummoners(defaultRegion);
 };
 
 storage.loadSummoners = function(region) {
+	var defaultOption = view.defaults.summonerListOption;
+	$(view.components.summonerSelectList).html(defaultOption);
 	storage.get(storage.keys.regions, function(result) {
-		console.log("Result: " + result);
-		console.log("Result.regions: " + result.regions);
 		var regions = result.regions;
 		var storedRegion = regions[region];
-		console.log("storedregion: " + storedRegion);
 		var isUndefined = typeof (storedRegion) === 'undefined';
 		if (!isUndefined) {
 			storedRegion.forEach(storage.loadSummoner);
@@ -23,27 +37,40 @@ storage.loadSummoners = function(region) {
 
 storage.loadSummoner = function(summoner) {
 	var option = '<option value="' + summoner + '">' + summoner + '</option>';
-	$('.summoner-selection select').append(option);
+	$(view.components.summonerSelectList).append(option);
 };
 
 storage.storeSummoner = function(region, summoner) {
 	storage.get(storage.keys.regions, function(result) {
 		var regions = result.regions;
-		if (typeof regions[region] === 'undefined') {
-			console.log(region + ' was undefined');
-			regions[region] = [];
+		var size = regions[region].length;
+		if (objectFuncs.contains(regions[region], summoner)) {
+			alert (summoner + ' is already added!');
+		} else {
+			regions[region][size] = summoner;
+		  	var pair = generateKeyValuePair(storage.keys.regions, regions);
+		  	storage.set(pair);
+		  	storage.loadSummoners(region);
 		}
-		var newRegion = regions[region];
-		var size = newRegion.length;
-		newRegion[size] = summoner;
-		regions[region] = newRegion;
-		console.log('regions: ' + regions + ' region: ' + newRegion + ' object: ' + newRegion[size]);
-	  	storage.set('regions', regions);
-	  	storage.loadSummoner(summoner);
+	});
+};
+
+storage.removeSummoner = function(region, summoner) {
+	storage.get(storage.keys.regions, function(result) {
+		var regions = result.regions;
+		logKeyValues('regions[region]', regions[region]);
+		if (objectFuncs.contains(regions[region], summoner)) {
+			arrayFuncs.remove(regions[region], summoner);
+		  	var pair = generateKeyValuePair(storage.keys.regions, regions);
+		  	storage.set(pair);
+		  	storage.loadSummoners(region);
+		} else {
+			alert (summoner + ' is not added!');
+		}
 	});
 }
 
-storage.init = function() {
+storage.initRegions = function() {
 	storage.get(storage.keys.regions, function(result) {
 		var regions = result.regions;
 		if (typeof regions === 'undefined') {
@@ -51,13 +78,17 @@ storage.init = function() {
 			model.serverAbbreviations.forEach(function(abbr) {
 				regions[abbr] = [];
 			});
-			storage.set(storage.keys.regions, regions);
+		  	var pair = generateKeyValuePair(storage.keys.regions, regions);
+		  	storage.set(pair);
 		}
 	});
+};
 
+storage.init = function() {
+	storage.initRegions();
 	storage.load('NA');
 	storage.setupFunctions();
-}
+};
 
 storage.setupFunctions = function() {
 	var submitButton = $('.summoner-selection input[type=submit]');
@@ -68,29 +99,20 @@ storage.setupFunctions = function() {
 		var selectedRegion = $('.region-selection a.selected').text();
 
 		if (summonerName && summonerName.length > 0) {
-			externals.checkIfSummonerExists(selectedRegion, summonerName);
+			externals.checkIfSummonerExists(selectedRegion, summonerName, storage.storeSummoner);
 		}
 	});
 
 	chrome.storage.onChanged.addListener(function(changes, namespace) {
 	 	for (key in changes) {
 		    var storageChange = changes[key];
-		    console.log('Storage key "%s" in namespace "%s" changed. ' +
-		                'Old value was "%s", new value is "%s".',
-		                key,
-		                namespace,
-		                storageChange.oldValue,
-		                storageChange.newValue);
-		  	}
-		});
-	};
-
-storage.get = function(item, callback) {
-	chrome.storage.local.get(item, callback);
-};
-
-storage.set = function(item, value) {
-	chrome.storage.local.set({item: value}, function() {
-		console.log(item.toString() + ' set to ' + value.toString());
+		    console.log(
+		    	'Storage key "%s" in namespace "%s" changed. ' +
+                'Old value was "%s", new value is "%s".',
+                key,
+                namespace,
+                storageChange.oldValue,
+                storageChange.newValue);
+	  	}
 	});
-}
+};

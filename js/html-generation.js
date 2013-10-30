@@ -7,6 +7,12 @@ var view = { };
 view.templates = { };
 view.templates.summoner = 'templates/_summoner.html';
 
+view.defaults = { };
+view.defaults.summonerListOption = '<option value="">Select or Add a Summoner</option>';
+
+view.components = { };
+view.components.summonerSelectList = '.summoner-selection select';
+
 view.loadTemplate = function(url, callback) {
 	$.get(url, callback);
 };
@@ -29,7 +35,7 @@ view.generateHtmlForSummonerHeader = function(template, summoner) {
 
 view.generateHtmlForSummonerStats = function(template, summoner) {
 	view.setTemplateData(template, '.level', 'LV' + summoner.level);
-	view.setTemplateData(template, '.wins.normal', summoner.normalWins);
+	view.setTemplateData(template, '.wins.normal', 'W' + summoner.normalWins);
 	view.setTemplateData(template, '.wins.ranked', summoner.rankedWins);
 	view.setTemplateData(template, '.wins.losses', summoner.rankedLosses);
 };
@@ -47,7 +53,7 @@ view.generateHtmlForSummonerChampionStatsContent = function(template, summoner) 
 	var kda = stats.kda;
 	var kdaText = kda.kills + '/' + kda.deaths + '/' + kda.assists;
 	view.setTemplateData(template, '.kda-ratio', kdaText);
-	view.setTemplateData(template, '.creep-score', stats.creepScore);
+	view.setTemplateData(template, '.creep-score', stats.creepScore + ' cs');
 };
 
 view.generateHtmlForSummonerChampionStats = function(template, summoner) {
