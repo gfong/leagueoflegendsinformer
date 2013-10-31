@@ -9,6 +9,7 @@
     "http://www.elophant.com/*",
     "http://www.lolnexus.com/*",
     "http://www.lolking.net/*",
+    "http://www.lolteam.net/*",
     "storage"
   ],
   "browser_action": {

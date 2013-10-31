@@ -11,7 +11,12 @@ view.defaults = { };
 view.defaults.summonerListOption = '<option value="">Select or Add a Summoner</option>';
 
 view.components = { };
+view.components.selectedRegion = '.region-selection a.selected';
+view.components.addSummonerButton = '.summoner-selection input[type=submit]';
 view.components.summonerSelectList = '.summoner-selection select';
+view.components.addSummonerField = '.summoner-selection input[type=text]';
+
+view.components.mapInfo = '.map-information';
 
 view.loadTemplate = function(url, callback) {
 	$.get(url, callback);
@@ -78,8 +83,13 @@ view.generateHtmlForSummoner = function(teamColor, summoner) {
 };
 
 view.generateHtmlForTeam = function(teamColor, team) {
+	$('.' + teamColor).html('');
 	for (var i = 0 ; i < team.length; i++) {
 		var summoner = team[i];
 		view.generateHtmlForSummoner(teamColor, summoner);
 	}
 };
+
+view.generateHtmlForMap = function(mapData) {
+	// mapData.split(',');
+}

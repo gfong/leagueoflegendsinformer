@@ -10,4 +10,11 @@ $(document).ready(function() {
 	$("select").mouseover(function() {
 		$("html").css("margin-right", 0);
 	});
+
+	$('select').change(function() {
+		var summoner = $('select option:selected').val();
+		var selectedRegion = $(view.components.selectedRegion).text();
+		// externals.lolNexus.getSummonerGame(selectedRegion, summoner);
+		externals.lolTeam.getSummonerGame(selectedRegion, summoner);
+	});
 });

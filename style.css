@@ -55,7 +55,7 @@ header>header>img { margin: 2px auto; display: block;}
 .content>ul>li header { background-color: #333333; padding: 0 3px; font-size: 14px; }
 
 .summoner-name { display: inline-block; }
-.rank { display: inline-block; color: white; float: right; }
+.rank { text-transform: capitalize; display: inline-block; color: white; float: right; }
 
 .summoner-stats { height: 18px; font-size: 14px; padding: 0 3px; }
 .level, .wins, .losses, .ranked-win-loss-ratio { display: inline-block; }
@@ -81,10 +81,14 @@ header>header>img { margin: 2px auto; display: block;}
 
 ul.blue-team { margin-right: 1px; }
 ul.blue-team .summoner-name { color: #6490d7;}
+ul.blue-team .summoner-name a { color: #6490d7; text-decoration: none; }
+ul.blue-team .summoner-name a:hover { color: #FFF; }
 ul.blue-team .champion-stats>img { border: 1px solid #6490d7; }
 
 ul.purple-team { margin-left: 1px; }
 ul.purple-team .summoner-name { color: #B199FA; }
+ul.purple-team .summoner-name a { color: #B199FA; text-decoration: none; }
+ul.purple-team .summoner-name a:hover { color: #FFF; }
 ul.purple-team .champion-stats>img { border: 1px solid #B199FA; }
 
 footer { margin-top: 5px; font-size: 14px; background-color: #292929; color: #808080; text-align: center; padding: 4px 0 6px; }

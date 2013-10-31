@@ -51,6 +51,7 @@ storage.storeSummoner = function(region, summoner) {
 		  	var pair = generateKeyValuePair(storage.keys.regions, regions);
 		  	storage.set(pair);
 		  	storage.loadSummoners(region);
+		  	$(view.components.addSummonerField).val('');
 		}
 	});
 };
@@ -90,16 +91,25 @@ storage.init = function() {
 	storage.setupFunctions();
 };
 
+storage.handlers = { };
+
+storage.handlers.addSummoner = function() {
+	var submitButton = $(view.components.addSummonerButton);
+	var addSummonerField = $(view.components.addSummonerField);
+	var summonerName = addSummonerField.val();	
+	var selectedRegion = $(view.components.selectedRegion).text();
+
+	if (summonerName && summonerName.length > 0) {
+		externals.lolKing.checkIfSummonerExists(selectedRegion, summonerName, storage.storeSummoner);
+	}
+}
+
 storage.setupFunctions = function() {
-	var submitButton = $('.summoner-selection input[type=submit]');
-	var addSummonerField = $('.summoner-selection input[type=text]');
-
-	submitButton.click(function() {
-		var summonerName = addSummonerField.val();	
-		var selectedRegion = $('.region-selection a.selected').text();
-
-		if (summonerName && summonerName.length > 0) {
-			externals.checkIfSummonerExists(selectedRegion, summonerName, storage.storeSummoner);
+	$(view.components.addSummonerButton).click(storage.handlers.addSummoner);
+	
+	$(view.components.addSummonerField).keypress(function() {
+		if (event.which == 13) {
+			storage.handlers.addSummoner();
 		}
 	});
 
