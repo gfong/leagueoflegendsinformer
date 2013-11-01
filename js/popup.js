@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	storage.init();
-	mock.load();
+	// mock.load();
 	externals.load();
 
 	view.generateHtmlForTeam('purple-team', mock.purpleTeam);
@@ -17,4 +17,6 @@ $(document).ready(function() {
 		// externals.lolNexus.getSummonerGame(selectedRegion, summoner);
 		externals.lolTeam.getSummonerGame(selectedRegion, summoner);
 	});
+
+	$(view.components.alert).click(view.handlers.alertClick);
 });

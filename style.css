@@ -92,4 +92,10 @@ ul.purple-team .summoner-name a:hover { color: #FFF; }
 ul.purple-team .champion-stats>img { border: 1px solid #B199FA; }
 
 footer { margin-top: 5px; font-size: 14px; background-color: #292929; color: #808080; text-align: center; padding: 4px 0 6px; }
+
+.alert-message { display: none; position: absolute; top: 40%; bottom: 40%; left: 0; right: 0; background-color: rgba(0,0,0,0.75); text-align: center; color: white; padding-top: 20px; }
+
+.overlay { display: none; position: absolute; top: 0; bottom: 0; left: 0; right: 0; background-color: rgba(0,0,0,0.75); }
+.overlay .status-message { position: absolute; top: 45%; bottom: 45%; left: 0; right: 0; text-align: center; color: white; }
+
 .hidden {  }

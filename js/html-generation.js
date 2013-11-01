@@ -17,6 +17,9 @@ view.components.summonerSelectList = '.summoner-selection select';
 view.components.addSummonerField = '.summoner-selection input[type=text]';
 
 view.components.mapInfo = '.map-information';
+view.components.alert = '.alert-message';
+view.components.overlay = '.overlay';
+view.components.status = '.status-message';
 
 view.loadTemplate = function(url, callback) {
 	$.get(url, callback);
@@ -92,4 +95,24 @@ view.generateHtmlForTeam = function(teamColor, team) {
 
 view.generateHtmlForMap = function(mapData) {
 	// mapData.split(',');
+}
+
+view.displayAlert = function(message) {
+	$(view.components.alert).html(message);
+	$(view.components.alert).fadeIn('fast');
+}
+
+view.handlers = { };
+
+view.handlers.alertClick = function() {
+	$(view.components.alert).fadeOut('fast');
+};
+
+view.displayStatus = function(message) {
+	$(view.components.status).html(message);
+	$(view.components.overlay).fadeIn('fast');
+}
+
+view.hideStatus = function() {
+	$(view.components.overlay).fadeOut('fast');
 }

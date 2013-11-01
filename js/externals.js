@@ -44,6 +44,8 @@ externals.lolKing.checkIfSummonerExists = function(region, summoner, successCB, 
 	var editedName = summoner.split(' ').join('+');
 	var siteUrl = externals.lolKing.url;
 	var search = siteUrl + externals.lolKing.queries.summonerSearch + editedName;
+	var statusMsg = 'Checking if ' + summoner + ' exists in ' + region + '...';
+	view.displayStatus(statusMsg);
 	$.get(search, function(data, status) {
 		var regionName = model.servers[region].name;
 		var query = externals.lolKing.queries.summonerExists;
@@ -54,14 +56,16 @@ externals.lolKing.checkIfSummonerExists = function(region, summoner, successCB, 
 				foundSummoner = true;
 			}
 		}
+		view.hideStatus();
 		if (foundSummoner) {
 			successCB(region, summoner);
-			alert(summoner + ' has been successfully added to ' + regionName + ' list!');
+			var successMsg = summoner + ' has been successfully added to ' + regionName + ' list!';
+			view.displayAlert(successMsg);
 		} else {
 			if (failCB != undefined) {
 				failCB(region, summoner);
 			}
-			alert('Cannot find summoner ' + summoner + ' in ' + regionName + '!');
+			view.displayAlert('Cannot find summoner ' + summoner + ' in ' + regionName + '!');
 		}
 	});
 };
@@ -69,13 +73,14 @@ externals.lolKing.checkIfSummonerExists = function(region, summoner, successCB, 
 externals.lolNexus.getSummonerGame = function(region, summoner, successCB, failCB) {
 	var editedName = summoner.split(' ').join('+');
 	var request = externals.lolNexus.url + region + '/search?name=' + editedName;
-
+	var statusMsg = 'Requesting data from ' + request + '...';
+	view.displayStatus(statusMsg);
 	$.get(request, function(data, status) {
-		console.log(status);
+		view.hideStatus();
 		if (status === 'OK') {
 			externals.lolNexus.isSummonerInGame(summoner, data, successCB, failCB);
 		} else {
-			alert('An error occurred while retrieving from ' + request + '.');
+			view.displayAlert('An error occurred while retrieving from ' + request + '.');
 		}
 	});
 };
@@ -83,7 +88,7 @@ externals.lolNexus.getSummonerGame = function(region, summoner, successCB, failC
 externals.lolNexus.isSummonerInGame = function(summoner, gameData, success, fail) {
 	var queries = externals.lolNexus.queries;
 	if ($(gameData).find(queries.notInGame) === null) {
-		alert(summoner + ' is currently not in a game!');
+		view.displayAlert(summoner + ' is currently not in a game!');
 	} else {
 		var mapData = $(gameData).find(queries.map);
 		logKeyValues('mapData', mapData);
@@ -99,22 +104,28 @@ externals.lolTeam.getSummonerGame = function(region, summoner) {
 	var editedName = summoner.split(' ').join('%20');
 	var lolTeamScope = externals.lolTeam;
 	var request = lolTeamScope.url + region + '/' + editedName;
-
+	var statusMsg = 'Requesting data from ' + request + '...';	
+	view.displayStatus(statusMsg);
 	$.get(request, function(data, status) {
+		view.hideStatus();
 		if (status === 'success') {
 			lolTeamScope.isSummonerInGame(summoner, data);
 		} else {
-			alert('An error occurred while retrieving from ' + request + '.');
+			view.displayAlert('An error occurred while retrieving from ' + request + '.');
 		}
 	});
+}
+
+externals.lolTeam.doesGameExist = function(data) {
+	return data != undefined && data[0] != undefined && data[0].innerHTML != undefined;
 }
 
 externals.lolTeam.isSummonerInGame = function(summoner, gameData) {
 	var queries = externals.lolTeam.queries;
 	var scraped = $(gameData);
 	var inGameResult = scraped.find(queries.notInGame);
-	if (inGameResult != undefined && inGameResult[0] != undefined && inGameResult[0].innerHTML != undefined) {
-		alert(summoner + ' is currently not in a game!');
+	if (externals.lolTeam.doesGameExist(inGameResult)) {
+		view.displayAlert(summoner + ' is currently not in a game!');
 	} else {
 		var summonerNames = scraped.find(queries.allSummonerNames);
 		var ranks = scraped.find(queries.allSummonerRanks);
