@@ -1,0 +1,96 @@
+	<script>
+		
+		window.LOLKING = {};
+		
+		LOLKING.createCookie = function(name, val, time) {
+			var expires = "";
+			if( time ) {
+				var date = new Date();
+				date.setTime(date.getTime()+(time*1000));
+				expires = "; expires="+date.toGMTString();
+			}
+
+			document.cookie = name+"="+val+expires+"; path=/; domain=.lolking.net";
+		}
+
+		LOLKING.getCookie = function(name) {
+			name += '=';
+			var parts = document.cookie.split(/;\s*/);
+			for (var i = 0; i < parts.length; i++)
+			{
+				var part = parts[i];
+				if (part.indexOf(name) == 0)
+					return part.substring(name.length)
+			}
+			return null;
+		}
+
+		LOLKING.log = new function() {
+	        this.view = function(category, label) {
+	            if (category && label) {
+	                if (typeof _gaq != 'undefined') {
+	                    _gaq.push(['_trackEvent', category, 'Impression', label]);
+	                } else {
+	                    setTimeout(function() { LOLKING.log.view(category, label) }, 100);
+	                }
+	            }
+	        }
+	
+	        this.click = function(category, label) {
+	            if (category && label) {
+	                if (typeof _gaq != 'undefined') {
+	                    _gaq.push(['_trackEvent', category, 'Clickthrough', label]);
+	                } else {
+	                    setTimeout(function() { LOLKING.log.click(category, label) }, 100);
+	                }
+	            }
+	        }
+
+            /**
+             * Log a custom track event in GA. Will keep trying until GA is available.
+             *
+             * @param category
+             * @param action
+             * @param label
+             */
+            this.custom = function (category, action, label) {
+                if (category && action && label) {
+                    if (typeof _gaq != 'undefined') {
+                        _gaq.push(['_trackEvent', category, action, label]);
+                    } else {
+                        setTimeout(function () { LOLKING.log.custom(category, action, label) }, 100);
+                    }
+                }
+            }
+	    };
+
+		// left: 37, up: 38, right: 39, down: 40,
+		// spacebar: 32, pageup: 33, pagedown: 34, end: 35, home: 36
+
+		function preventDefault(e) {
+		  e = e || window.event;
+		  if (e.preventDefault)
+			  e.preventDefault();
+		  e.returnValue = false;  
+		}
+
+		function wheel(e) {
+		  preventDefault(e);
+		}
+
+		function disable_scroll() {
+		  if (window.addEventListener) {
+			  window.addEventListener('DOMMouseScroll', wheel, false);
+		  }
+		  window.onmousewheel = document.onmousewheel = wheel;
+		  //document.onkeydown = keydown;
+		}
+
+		function enable_scroll() {
+			if (window.removeEventListener) {
+				window.removeEventListener('DOMMouseScroll', wheel, false);
+			}
+			window.onmousewheel = document.onmousewheel = document.onkeydown = null;  
+		}		
+		
+	</script>

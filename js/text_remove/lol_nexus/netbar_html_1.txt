@@ -1,0 +1,41 @@
+<!-- NETBAR -->
+<div id="netbar" class="t-netbar u-icon u-icon-z">
+    
+    <!-- CURSE INFO -->
+    <div class="t-netbar-curseInfo">
+        <!-- DISCOVER -->
+        <ul class="t-netbar-discover t-netbar-section u-dropdown" role="directory">
+  <li>
+    <a href="#" class="t-netbar-label">Curse Sites <i class="u-icon-dropDown"></i></a>
+      <ul>
+            <li class="break">Top Sites</li>
+            <li><a href="http://www.mmo-champion.com/"><i class="u-icon-mmoc"></i>MMO-Champion</a></li>
+            <li><a href="http://www.arenajunkies.com/"><i class="u-icon-arenajunkies"></i>Arena Junkies</a></li>
+            <li><a href="http://www.reignofgaming.net/"><i class="u-icon-rog"></i>Reign of Gaming</a></li>
+            <li><a href="http://www.lolpro.com/"><i class="u-icon-lolpro"></i>LoL Pro</a></li>
+            <li><a href="http://www.minecraftforums.net/"><i class="u-icon-minecraftforums"></i>Minecraft Forums</a></li>
+            <li><a href="http://www.guildwars2guru.com/"><i class="u-icon-guildwars2guru"></i>Guild Wars 2 Guru</a></li>
+            <li><a href="http://www.fpsgeneral.com/"><i class="u-icon-fpsg"></i>FPS General</a></li>
+           <li class="featured"><a href="http://www.curse.com/">Curse.com</a></li>
+    </ul>
+  </li>
+</ul>
+        
+    <!-- LOGGED OUT -->
+    
+
+        <!-- HELP -->
+        <ul class="t-netbar-help t-netbar-section">
+            <li>
+                <a href="http://support.curse.com/" class="t-netbar-label">Help</a>
+            </li>
+        </ul>
+        <a class="t-netbar-premium" href="http://www.curse.com/premium">Get an Epic Experience with Premium</a>
+    </div> <!-- // END CURSE INFO -->
+
+    <!-- USER INFO -->
+    
+
+    <!-- LOGGED IN -->
+    
+</div>

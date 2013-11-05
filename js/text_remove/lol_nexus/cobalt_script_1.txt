@@ -1,0 +1,7 @@
+<script type="text/javascript">
+
+    Cobalt.runOnLoad(function () {
+        Cobalt.initialize([{dependency:Noxia.Search, priority:99, name:'Noxia.Search'},{dependency:Noxia.Masteries, priority:99, name:'Noxia.Masteries'},{dependency:Noxia.ReplayModal, priority:99, name:'Noxia.ReplayModal'},{dependency:Cobalt.Social_Facebook, priority:99, name:'Cobalt.Social_Facebook'},{dependency:Cobalt.Tabs, priority:99, name:'Cobalt.Tabs'},{dependency:Cobalt.NiceDates, priority:99, name:'Cobalt.NiceDates'},{dependency:Cobalt.Core, priority:99, name:'Cobalt.Core'},{dependency:Cobalt.Forms, priority:99, name:'Cobalt.Forms'},{dependency:Cobalt.Forum, priority:99, name:'Cobalt.Forum'},{dependency:Cobalt.UI, priority:99, name:'Cobalt.UI'},{dependency:Cobalt.Auth, priority:99, name:'Cobalt.Auth'},{dependency:Cobalt.Notifications, priority:99, name:'Cobalt.Notifications'},{dependency:Cobalt.Feedback, priority:99, name:'Cobalt.Feedback'},{dependency:Cobalt.WarningNotification, priority:99, name:'Cobalt.WarningNotification'}]);
+    });
+
+</script><div id="queued-ads"><script type="text/javascript">Cobalt.Advertising.processAds();</script></div>

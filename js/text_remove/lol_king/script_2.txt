@@ -1,0 +1,451 @@
+<script>
+
+	(function($) {
+
+		$.tCarousel = function(element, options) {
+
+			var defaults = {
+				delay: 7000,
+				onFoo: function() {}
+			}
+
+			var plugin = this;
+
+			plugin.settings = {}
+
+			var $element = $(element),
+				 element = element,
+				 timerId;
+
+			var $li = $element.find('li');
+			var $ul = $element.find('ul');				 
+			
+			var width, slideWidth;
+			
+			var $next = $('<a class="tcarousel-next" href="#">&rsaquo;</a>');
+			var $prev = $('<a class="tcarousel-prev" href="#">&lsaquo;</a>');
+			var $carouselNav = $('<ul class="tcarousel-nav" />');
+			
+			$li.show(); //they are hidden initially so slow browsers don't look bad
+			
+			$next.click(function(e){
+			
+				e.preventDefault();
+				var left = -parseInt($ul.css('left'));
+				
+				plugin.goto(width > (left+slideWidth) ? (left+slideWidth)/slideWidth : 0 );				
+			
+			});
+			
+			$prev.click(function(e){
+			
+				e.preventDefault();
+				var left = -parseInt($ul.css('left'));
+
+				
+				plugin.goto(0 <= (left-slideWidth) ? (left-slideWidth)/slideWidth : $li.length - 1 );				
+			
+			});
+			
+			plugin.init = function() {
+				plugin.settings = $.extend({}, defaults, options);
+				// code goes here
+				
+				width = $li.outerWidth()*$li.length;
+				slideWidth = parseInt($li.css('width'));							
+				
+				$carouselNav.empty();
+				
+				$li.find('img').each(function(){
+
+					$carouselNav.append('<li style="background-image: url(' + $(this).attr('src') + ');"></li>');
+
+				});
+				
+				$carouselNav.children().click(function(e){
+				
+					e.preventDefault();
+					plugin.goto($(this).index());
+				
+				});
+				
+				$carouselNav.children().first().addClass('selected');
+				
+				$element.append($carouselNav);
+				$element.append($next);
+				$element.append($prev);
+				
+				$element.mouseenter(function(){
+				
+					plugin.stop();
+				
+				});
+				
+				$element.mouseleave(function(){
+				
+					plugin.start();
+				
+				});				
+				
+				$ul.addClass('tcarousel-slider');
+				
+				$ul.css({
+
+					'width': width + 'px'
+				});
+				
+				plugin.start();
+
+			}
+
+			plugin.goto = function(slideIndex) {
+			
+				var newLeft = slideIndex*slideWidth;
+			
+				if( slideIndex <= $li.length-1 ) {
+					
+					$ul.animate({left: -newLeft});
+					$carouselNav.children().removeClass('selected').eq(slideIndex).addClass('selected');
+					
+				}
+
+			}
+			
+			plugin.stop = function() {
+				window.clearInterval(timerId);
+			}
+
+			plugin.start = function() {
+				window.clearInterval(timerId);
+				timerId = window.setInterval(function(){
+				
+					var left = -parseInt($ul.css('left'));
+					
+					plugin.goto(width > (left+slideWidth) ? (left+slideWidth)/slideWidth : 0 );
+				
+				}, plugin.settings.delay);
+			}			
+			
+			var foo_private_method = function() {
+				// code goes here
+			}
+
+			plugin.init();
+
+		}
+
+		$.fn.tCarousel = function(options) {
+
+			return this.each(function() {
+				if (undefined == $(this).data('tCarousel')) {
+					var plugin = new $.tCarousel(this, options);
+					$(this).data('tCarousel', plugin);
+				}
+			});
+
+		}
+
+	})(jQuery);
+	
+	
+	
+	$(function(){
+
+		$('.fancybox').fancybox();
+	
+		$('.tcarousel').tCarousel();
+		
+		// var homepage_carousel = new Carousel();
+		
+		
+		
+		// $('.carousel').mouseenter(homepage_carousel.pause);
+		// $('.carousel').mouseleave(homepage_carousel.resume);
+		
+		// $('.carouselnav').children().click(function(){
+		
+			// var index = $(this).index();
+			// homepage_carousel.goTo(index);
+		
+		// });
+		
+		$('input.focusblur').each(function(){
+		
+			$(this).focus(function(){
+			
+				if( $(this).val() == $(this).attr('title') ) {
+					$(this).val('');
+				}
+			
+			});
+			
+			$(this).blur(function(){
+			
+				if( $(this).val() == '' ) {
+					$(this).val($(this).attr('title'));
+				}
+			
+			});			
+		
+		});
+		
+		$('.nicescroll').niceScroll({cursorcolor:"#111", cursorborder: "1px solid #000", cursoropacitymin: 0.2, cursoropacitymax: 0.8 });
+		
+		$('[data-hoverswitch]').each(function(){
+		
+			$(this).attr('data-hoverswitchorig', $(this).text());
+		
+			$(this).hover(function(){
+			
+				$(this).text($(this).attr('data-hoverswitch'));
+			
+			}, function(){
+			
+				$(this).text($(this).attr('data-hoverswitchorig'));
+			
+			});
+		
+		});
+		
+		$.fn.streamplayer = function(type, id){
+			if( type == 'twitch' ) {
+				$(this).replaceWith([
+					'<object width="100%" height="100%" bgcolor="#000000" data="http://www.twitch.tv/widgets/live_embed_player.swf?channel=' + id + '" id="live_embed_player_flash" type="application/x-shockwave-flash">',
+						'<param value="true" name="allowFullScreen">',
+						'<param value="always" name="allowScriptAccess">',
+						'<param value="all" name="allowNetworking">',
+						'<param value="http://www.twitch.tv/widgets/live_embed_player.swf" name="movie">',
+						'<param value="hostname=www.twitch.tv&amp;channel=' + id + '&amp;auto_play=true&amp;start_volume=25" name="flashvars">',
+					'</object>'
+				].join(''));
+			} else {
+				$(this).replaceWith([
+					'<object width="100%" height="100%">',
+						'<param name="movie" value="http://www.own3d.tv/livestream/' + id + ';autoplay=true" />',
+						'<param name="allowscriptaccess" value="always" />',
+						'<param name="allowfullscreen" value="true" />',
+						'<param name="wmode" value="transparent" />',
+						'<embed src="http://www.own3d.tv/livestream/' + id + ';autoplay=true" type="application/x-shockwave-flash" allowfullscreen="true" allowscriptaccess="always" width="100%" height="100%" wmode="transparent"></embed>',
+					'</object>'
+				].join(''));			
+			
+			
+			}
+		
+		}
+
+		//tabs
+		var stream_tab_initted = false;
+		$('.tabs2').each(function() {
+		
+			$(this).children().not('[data-notab]').click(function(e){
+		
+				//e.preventDefault();
+				$(this).addClass('selected').siblings().removeClass('selected');
+				
+				var index = $(this).index();
+				
+				$(this).parent().next().children().each(function(){
+				
+					if( index == $(this).index() ) {
+
+						$(this).show();
+					
+						if( $(this).is('[id="stream_tab"]') ) {
+							
+							if( stream_tab_initted ) {
+
+								$(this).css({
+									'z-index': '1',
+									'height': 'inherit',
+									'width': 'inherit'
+								});
+								
+							} else {
+							
+								var stream_player_ctr = $(this).find('.stream_player');
+								stream_player_ctr.streamplayer(stream_player_ctr.attr('data-type'), stream_player_ctr.attr('data-id'));
+								$(this).show();
+								
+							}
+							stream_tab_initted = true;
+						
+						} else if( $(this).is('[id="leagues_tab"]') ) {
+
+							$('#league_iframe').trigger('load');
+
+						}						
+						$(this).find('.nicescroll').niceScroll({cursorcolor:"#111", cursorborder: "1px solid #000", cursoropacitymin: 0.2, cursoropacitymax: 0.8 });
+
+					} else {
+					
+						if( $(this).is('[id="stream_tab"]') ) {
+							
+							if( stream_tab_initted ) {
+
+								$(this).css({
+									'z-index': '-1',
+									'height': '0px',
+									'width': '0px'
+								});
+							
+							} else {
+								
+								$(this).hide();
+							}
+						
+						} else {
+						
+							$(this).hide();
+						
+						}
+					
+						$(this).find('.nicescroll').getNiceScroll().remove();
+				
+					}
+				
+				});
+				
+			}).first().click();
+			
+			$('#stream_tab').hide();
+			
+		});
+	
+		$('.pagination_tabs').each(function(){
+		
+			$(this).children().not('[data-notab]').click(function(e){
+		
+				e.preventDefault();
+				$(this).addClass('selected').siblings().removeClass('selected');
+				$(this).parent().next().children().hide().eq($(this).index()).show();
+		
+			}).first().click();		
+		
+		});
+		
+		
+		
+	
+		$('.match_win, .match_loss').click(function(e){
+
+			if( $(e.target).is('a') ) return;
+		
+			var match = $(this);
+			
+			if( match.hasClass('open') ) {
+				match.removeClass('open');
+				
+				match.css({ height: 94 });		
+
+				match.find('.match_show_full_details_btn').text('Show Details');
+
+                document.location.hash = 'history';
+			} else {
+				match.addClass('open');
+				
+				match.css({ height: 354 });
+				
+				match.find('.match_show_full_details_btn').text('Hide Details');
+
+                document.location.hash = 'history/' + match.data('game-id');
+			}
+			
+
+
+
+		
+		
+		});
+		
+		
+        var down_triangle = '&#x25BC;';
+        var up_triangle = '&#x25B2;';
+        
+        $('table.clientsort').each(function(){
+        
+            var table = $(this);
+        
+            $(this).find('th').each(function(){
+            
+                $(this).data('label', $(this).text());
+            
+            }).click(function(e){
+            
+                e.preventDefault();
+                
+                var sortIndex = $(this).index();
+                
+                if( $(this).hasClass('sort-desc') ) {
+                    $(this).html($(this).data('label') + ' ' + up_triangle);
+                    $(this).removeClass('sort-desc').addClass('sort-asc');
+                    
+                    table.append(table.find('tr').not(':first').remove().sort((function(index){ return function(a, b){
+                        var a = $(a).find('td:eq(' + index + ')');
+                        var b = $(b).find('td:eq(' + index + ')');                    
+                        if( a.attr('data-sorttype') == 'string' ) {
+                            return (a.attr('data-sortval') || a.text()) < (b.attr('data-sortval') || b.text()) ? -1 : 1;
+                        } else { 
+                            return (a.attr('data-sortval') || a.text()) - (b.attr('data-sortval') || b.text());
+                        }
+                    }; })(sortIndex)));                    
+                   
+                    
+                } else {
+                    $(this).parent().children('.sort-desc').each(function(){
+                        $(this).removeClass('sort-desc');
+                        $(this).text($(this).data('label'));
+                    });
+                    $(this).parent().children('.sort-asc').each(function(){
+                        $(this).removeClass('sort-asc');
+                        $(this).text($(this).data('label'));
+                    });
+                    
+                    $(this).addClass('sort-desc');
+                    $(this).html($(this).data('label') + ' ' + down_triangle);
+                
+                    table.append(table.find('tr').not(':first').remove().sort((function(index){ return function(a, b){
+                        var a = $(a).find('td:eq(' + index + ')');
+                        var b = $(b).find('td:eq(' + index + ')');
+                        if( a.attr('data-sorttype') == 'string' ) {
+                            return (b.attr('data-sortval') || b.text()) < (a.attr('data-sortval') || a.text()) ? -1 : 1;
+                        } else { 
+                            return (b.attr('data-sortval') || b.text()) - (a.attr('data-sortval') || a.text());
+                        }
+                    }; })(sortIndex))); 
+                    
+                }
+                
+                table.find('tr:odd').removeClass('even').addClass('odd');
+                table.find('tr:even').removeClass('odd').addClass('even');
+            
+            
+            });
+        
+        
+        
+        });		
+
+		var hash = (document.location.hash||'#').substring(1);
+            hash = hash.match(/([^/]+)\/?(.*)/);
+
+        if (hash) {
+            var hashObj = $('#hash-' + hash[1]);
+
+            if( hashObj.length ) {
+                hashObj.click();
+
+                if (hash.length >= 2 && hash[1] === 'history' && hash[2] !== '') {
+                    var match = $('div[data-game-id="' + hash[2] + '"]');
+
+                    match.click();
+                    $('html,body').animate({scrollTop: match.offset().top});
+                }
+            }
+        }
+	});
+		
+		
+
+
+</script>

@@ -10,12 +10,8 @@ storage.get = function(item, callback) {
 	chrome.storage.local.get(item, callback);
 };
 
-storage.set = function(keyPair) {
-	chrome.storage.local.set(keyPair, function() {
-		for (key in keyPair) {
-			console.log('Set ' + key + ' as value ' + keyPair[key]);
-		}
-	});
+storage.set = function(keyPair, callback) {
+	chrome.storage.local.set(keyPair, callback);
 }
 
 storage.load = function(defaultRegion) {
@@ -40,6 +36,17 @@ storage.loadSummoner = function(summoner) {
 	$(view.components.summonerSelectList).append(option);
 };
 
+storage.getSummoners = function(region, callback) {
+	storage.get(storage.keys.regions, function(result) {
+		var regions = result.regions;
+		var storedRegion = regions[region];
+		var isUndefined = typeof (storedRegion) === 'undefined';
+		if (!isUndefined) {
+			callback(storedRegion);
+		}
+	});
+}
+
 storage.storeSummoner = function(region, summoner) {
 	storage.get(storage.keys.regions, function(result) {
 		var regions = result.regions;
@@ -59,12 +66,12 @@ storage.storeSummoner = function(region, summoner) {
 storage.removeSummoner = function(region, summoner) {
 	storage.get(storage.keys.regions, function(result) {
 		var regions = result.regions;
-		logKeyValues('regions[region]', regions[region]);
 		if (objectFuncs.contains(regions[region], summoner)) {
 			arrayFuncs.remove(regions[region], summoner);
 		  	var pair = generateKeyValuePair(storage.keys.regions, regions);
-		  	storage.set(pair);
-		  	storage.loadSummoners(region);
+		  	storage.set(pair, function() {
+			  	storage.loadSummoners(region);
+		  	});
 		} else {
 			alert (summoner + ' is not added!');
 		}
@@ -100,7 +107,7 @@ storage.handlers.addSummoner = function() {
 	var selectedRegion = $(view.components.selectedRegion).text();
 
 	if (summonerName && summonerName.length > 0) {
-		externals.lolKing.checkIfSummonerExists(selectedRegion, summonerName, storage.storeSummoner);
+		externals.lolKing.fn.checkIfSummonerExists(selectedRegion, summonerName, storage.storeSummoner);
 	}
 }
 

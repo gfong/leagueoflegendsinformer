@@ -54,4 +54,13 @@ arrayFuncs.remove = function (collection, value) {
 	}
 	collection.length = collection.length - 1;
 	return contains;
-}
+};
+
+arrayFuncs.removeAtIndex = function (collection, index) {
+	for (var i = index; i < collection.length; i++) {
+			collection[i] = collection[i+1];
+	}
+	collection.length = collection.length - 1;
+};
+
+
