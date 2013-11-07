@@ -12,6 +12,7 @@ view.defaults = { };
 view.defaults.summonerListOption = '<option value="">Select or Add a Summoner</option>';
 
 view.components = { };
+view.components.regions = '.region-selection a';
 view.components.selectedRegion = '.region-selection a.selected';
 view.components.addSummonerButton = '.summoner-selection input[type=submit]';
 view.components.summonerSelectList = '.summoner-selection select';
@@ -22,6 +23,7 @@ view.components.content = '.content';
 view.components.alert = '.alert-message';
 view.components.overlay = '.overlay';
 view.components.status = '.status-message';
+view.components.cancelButton = '<button>Cancel</button>';
 
 view.generateHtmlForLevel = function(summonerName, level) {
 	var editedName = summonerName.split(' ').join('_');
@@ -129,7 +131,7 @@ view.generateHtmlForSummonerChampionStats = function(template, summoner) {
 	var championName = summoner.currentChampionStats.name;
 	var championId = summoner.currentChampionStats.id;
 	var imagePath = 'images/champ-icons/' + championId + "_Web_0.jpg";
-	var altText = championName + ' icon';
+	var altText = championName;
 	view.setTemplateAttribute(template, '.icon', 'src', imagePath);
 	view.setTemplateAttribute(template, '.icon', 'alt', altText);
 	view.generateHtmlForSummonerChampionStatsHeader(template, summoner);
@@ -190,17 +192,29 @@ view.hideAlert = function() {
 	$(view.components.alert).fadeOut('fast');
 }
 
-view.handlers = { };
-
-view.handlers.alertClick = function() {
-	$(view.components.alert).fadeOut('fast');
-};
-
 view.displayStatus = function(message) {
-	$(view.components.status).html(message);
+	$(view.components.status).html(message + "<br/>" + view.components.cancelButton);
 	$(view.components.overlay).fadeIn('fast');
+	$('.status-message>button').click(view.handlers.cancelClick);
 }
 
 view.hideStatus = function() {
 	$(view.components.overlay).fadeOut('fast');
 }
+
+view.handlers = { 
+	alertClick: function() {
+		$(view.components.alert).fadeOut('fast');
+	},
+
+	cancelClick: function() {
+		view.hideStatus();
+	},
+
+	regionClick: function() {	
+		$(view.components.selectedRegion).removeClass('selected');
+		$(this).addClass('selected');
+		var selectedRegion = $(view.components.selectedRegion).text();
+		storage.loadSummoners(selectedRegion);
+	}
+};

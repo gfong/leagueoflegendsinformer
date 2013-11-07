@@ -18,7 +18,7 @@ externals.lolTeam.fn = {
 		 
 		request.fail(function( jqXHR, textStatus ) {
 			view.hideStatus();
-			view.displayAlert('An error occurred while retrieving from ' + request + '.');
+			view.displayAlert('An error occurred while retrieving from ' + requestUrl + '.');
 		});
 
 		// $.get(request, function(data, status) {
@@ -76,7 +76,7 @@ externals.lolTeam.fn = {
 
 		summonerStats.lolKingLink = name;
 		summonerStats.name = $(name).text();
-		summonerStats.id = $(name).attr('href').substring(35);
+		summonerStats.id = $(name).attr('href').match(/\d+/)[0];
 		
 		var rankImage = $(rankData)[0];
 		var rankImageSrc = $(rankImage).attr('src');
@@ -88,23 +88,35 @@ externals.lolTeam.fn = {
 			var divionsConverted = model.rankDivisions[rankDivision - 1];
 			summonerStats.rank = rankLeague + ' ' + divionsConverted;
 		}
-		
 
 		var champName = $(data.find(queries.champName))[0].innerHTML;
-		var champKDA = objectBuilder(model.kda);
 		var champGames = $(data.find(queries.champGames)).innerHTML;
 		
-		var queriedKDA = $(data.find(queries.champKDA));
-		if (queriedKDA.length > 0) {
-			champKDA.kills = queriedKDA[0].innerHTML;
-			champKDA.deaths = queriedKDA[1].innerHTML;
-			champKDA.assists = queriedKDA[2].innerHTML;
+		summonerStats.currentChampionStats = objectBuilder(model.championStats);
+		champStats = summonerStats.currentChampionStats;
+
+		if(data === null || data[0] === undefined) {
+			champStats.playedInRanked = 'Never Played In Ranked';
+		} else {
+			var playedInRankedMatch = data[0].innerHTML.match(queries.champPlayedRankRegex);
+			if (playedInRankedMatch === null) {
+				champStats.playedInRanked = 'Never Played In Ranked';
+			} else {
+				var champPlayedRank = playedInRankedMatch[0];
+				var champKDA = objectBuilder(model.kda);
+				var queriedKDA = $(data.find(queries.champKDA));
+				if (queriedKDA.length > 0) {
+					champKDA.kills = queriedKDA[0].innerHTML;
+					champKDA.deaths = queriedKDA[1].innerHTML;
+					champKDA.assists = queriedKDA[2].innerHTML;
+				}		
+				champStats.kda = champKDA;
+				champStats.playedRank = champPlayedRank;
+			}
 		}
 
-		summonerStats.currentChampionStats = objectBuilder(model.championStats);
-		summonerStats.currentChampionStats.id = model.champions[champName];
-		summonerStats.currentChampionStats.name = champName;
-		summonerStats.currentChampionStats.kda = champKDA;
-		summonerStats.currentChampionStats.games = champGames;
+		champStats.id = model.champions[champName];
+		champStats.name = champName;
+		champStats.games = champGames;
 	},
 };

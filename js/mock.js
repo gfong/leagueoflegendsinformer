@@ -11,6 +11,8 @@ mock.purpleTeam = [];
 mock.load = function() {
 	mock.setupBlueTeam();
 	mock.setupPurpleTeam();
+	view.generateHtmlForTeam('purple-team', mock.purpleTeam);
+	view.generateHtmlForTeam('blue-team', mock.blueTeam);
 };
 
 mock.setupBlueTeam = function() {

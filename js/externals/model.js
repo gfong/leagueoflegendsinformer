@@ -61,9 +61,10 @@ externals.lolTeam = {
 		notInGame: 				'.alert-error:first-child',
 		allSummonerNames: 		'.player-card-title>a',
 		allSummonerRanks: 		'.player-card-rating-container>img',
-		allSummonerChampData: 	'.player-card-champion-text';
+		allSummonerChampData: 	'.player-card-champion-text',
 		champName: 				'.bold-text',
 		champKDA: 				'b',
+		champPlayedRankRegex: 	/(\d*(th|st|rd|nd) most played)|(Favorite)/,
 		champGames: 			'b:nth-child(4)'
 	}
 };
@@ -102,10 +103,15 @@ externals.lolcounter = {
 	url:'http://www.lolcounter.com/',
 	queries: {
 		getChampCounters: 'champ/',
-		getAllCounters: '#All .picks-panel-link',
-		getBottomCounters: '#Bottom .picks-panel-link',
-		getTopCounters: '#Top .picks-panel-link',
-		getGeneralCounters: '#General .picks-panel-link',
+		getAllCounters: '#All #counterpicks-list .picks-panel-link',
+		getAllStrongs: '#All #goodagainst-list .picks-panel-link',
+		getBottomCounters: '#Bottom #counterpicks-list .picks-panel-link',
+		getTopCounters: '#Top #counterpicks-list .picks-panel-link',
+		getGeneralCounters: '#General #counterpicks-list .picks-panel-link',
+		getChampName: /\w+\s?'?\w+(?=        )/,
 		getBarPercent: '.bar'
+	},
+	temporaryChampCounterData: {
+
 	}
 }

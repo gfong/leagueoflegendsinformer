@@ -1,12 +1,9 @@
 $(document).ready(function() {
 	storage.init();
-	// mock.load();
-	externals.load();
+	// mock.load();	
+	externals.init();
 	navigation.fn.generateMain();
 	navigation.initHandlers();
-
-	// view.generateHtmlForTeam('purple-team', mock.purpleTeam);
-	// view.generateHtmlForTeam('blue-team', mock.blueTeam);
 
 	$("select").mouseover(function() {
 		$("html").css("margin-right", 0);
@@ -20,4 +17,6 @@ $(document).ready(function() {
 	});
 
 	$(view.components.alert).click(view.handlers.alertClick);
+	$(view.components.regions).click(view.handlers.regionClick);
+	// externals.lolcounter.fn.getChampCounterInfo('Sona');
 });

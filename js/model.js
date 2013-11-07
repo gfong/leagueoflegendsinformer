@@ -10,11 +10,11 @@ model.summonerStats = {
   id: 0,
   name: "Name",
   lolKingLink: "Link",
-  level: 0,
-  normalWins: 0,
+  level: '?',
+  normalWins: '?',
   rank: "Rank",
-  rankedWins: 0,
-  rankedLosses: 0,
+  rankedWins: '?',
+  rankedLosses: '?',
   currentChampionStats: objectBuilder(model.championStats),
   team: "Team",
   teamIndex: 0
@@ -27,11 +27,12 @@ model.championStats = {
   id: 0,
   name: "Name",
   playedRank: "Played Rank",
-  games: 0,
-  wins: 0,
-  losses: 0,
+  playedInRanked: undefined,
+  games: '?',
+  wins: '?',
+  losses: '?',
   kda: objectBuilder(model.kda),
-  creepScore: 0
+  creepScore: '?'
 };
 
 /**

@@ -11,7 +11,7 @@
     "http://www.lolking.net/*",
     "http://www.lolteam.net/*",
     "https://teemojson.p.mashape.com/",
-    "http://www.lolcounter.com/*"
+    "http://www.lolcounter.com/*",
     "storage"
   ],
   "browser_action": {

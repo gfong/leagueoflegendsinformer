@@ -64,7 +64,10 @@ header>header>img { margin: 2px auto; display: block;}
 
 .champion-stats { font-size: 11px; }
 
-.champion-stats>img { width: 39px; height: 39px; float: left; }
+.champion-stats .icon-container { width: 39px; height: 39px; float: left; position: relative; cursor: pointer; }
+.champion-stats .icon-container>img { width: 39px; height: 39px; }
+.champion-stats .icon-overlay { color: white; padding: 12px 0 0 1px; width: 38px; height: 27px; position: absolute }
+.champion-stats .icon-overlay.active { }
 
 .champion-stats>header { height: 15px; display: inline-block; width: 144px; }
 .champion-stats>header>.champion-name { color: #c4b14e; display: inline-block; color: ;}
@@ -82,16 +85,16 @@ header>header>img { margin: 2px auto; display: block;}
 .champion-stats .creep-score { float: right; }
 
 ul.blue-team { margin-right: 2px; }
-ul.blue-team .summoner-name { color: #6490d7;}
-ul.blue-team .summoner-name a { color: #6490d7; text-decoration: none; }
+ul.blue-team .summoner-name { color: #84B5E7;} /* Old color: #6490d7; */
+ul.blue-team .summoner-name a { color: #84B5E7; text-decoration: none; }
 ul.blue-team .summoner-name a:hover { color: #FFF; }
-ul.blue-team .champion-stats>img { border: 1px solid #6490d7; }
+ul.blue-team .icon-container { border: 1px solid #6490d7; }
 
 ul.purple-team { margin-left: 3px; }
 ul.purple-team .summoner-name { color: #B199FA; }
 ul.purple-team .summoner-name a { color: #B199FA; text-decoration: none; }
 ul.purple-team .summoner-name a:hover { color: #FFF; }
-ul.purple-team .champion-stats>img { border: 1px solid #B199FA; }
+ul.purple-team .icon-container { border: 1px solid #B199FA; }
 
 .content>nav {}
 .content>nav>button { border: 0; color: #777; text-align: center; font-size:12px; text-transform: uppercase; width: 191px; display: inline-block; margin: 4px 0; padding: 4px; background-color: #1F1F1F; }
@@ -109,5 +112,6 @@ footer { margin-top: 2px; font-size: 14px; background-color: #292929; color: #80
 
 .overlay { display: none; position: absolute; top: 0; bottom: 0; left: 0; right: 0; background-color: rgba(0,0,0,0.75); }
 .overlay .status-message { position: absolute; top: 40%; bottom: 40%; left: 5%; right: 5%; text-align: center; color: white; }
+.overlay .status-message>button { color: white; background: black; border-width: 1px; margin-top: 5px; }
 
 .hidden { }

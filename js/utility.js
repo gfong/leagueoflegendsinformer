@@ -63,4 +63,30 @@ arrayFuncs.removeAtIndex = function (collection, index) {
 	collection.length = collection.length - 1;
 };
 
+var regexFuncs = {
+	removeScript: function(data) {
+		data = data.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+		return data;
+	},
+
+	removeImg: function(data) {
+		data = data.replace(/<img\b.*?>/gi, '');
+		return data;
+	},
+
+	removeLink: function(data) {
+		data = data.replace(/<link\b.*?\/?>/gi, '');
+		return data;
+	},
+
+	removeNoScript: function(data) {
+		data = data.replace(/<noscript\b[^<]*(?:(?!<\/noscript>)<[^<]*)*<\/noscript>/gi, '');
+		return data;
+	},
+
+	removeSelect: function(data) {
+		data = data.replace(/<select\b[^<]*(?:(?!<\/select>)<[^<]*)*<\/select>/gi, '');
+		return data;
+	}
+}
 

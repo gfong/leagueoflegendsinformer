@@ -46,7 +46,8 @@ externals.lolKing.fn = {
 		var region = $(view.components.selectedRegion).text().toLowerCase();
 		var root = externals.lolKing.url;
 		var action = externals.lolKing.queries.summonerStats;
-		return root + action + region + '/' + summoner.id;
+		var request = root + action + region + '/' + summoner.id;
+		return request;
 	},
 
 	generateSummoner: function(summoner) {
@@ -98,9 +99,9 @@ externals.lolKing.fn = {
 			view.generateNeverPlayedInRanked(summoner.name);
 		}
 
-
 		externals.lolKing.loadCount++;
 		if (externals.lolKing.loadCount > 9) {
+			externals.lolcounter.fn.initHandlers();
 			view.hideStatus();
 			loadCount = 0;
 		}
@@ -110,7 +111,7 @@ externals.lolKing.fn = {
 		var levelQuery = externals.lolKing.queries.summonerLevel;
 		var queried = queryable.find(levelQuery);
 		var html = queried.html();
-		var summonerLevel = html.match(/Level.[\D\S]*?\d*/g);
+		var summonerLevel = html.match(/Level.[\D\S]*?\d*/g).toString().replace('Level', 'Lv.');
 		view.generateHtmlForLevel(summoner.name, summonerLevel);
 	},
 
@@ -131,13 +132,8 @@ externals.lolKing.fn = {
 	},
 
 	removeDataTags: function(data) {
-		data = data.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
-		// data = data.replace(/<noscript\b[^<]*(?:(?!<\/noscript>)<[^<]*)*<\/noscript>/gi, '');
-		// data = data.replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, '');
-		data = data.replace(/<img\b.*?>/gi, '');		
-		// data = data.replace(/<link\b[^<]*(?:(?!\/>)<[^<]*)*\/>/gi, '');	
-		// data = data.replace(/background:.*?[^&quot;];/gi, '');
-		// data = data.replace(/src=".*?"/gi, '');
+		data = regexFuncs.removeScript(data);
+		data = regexFuncs.removeImg(data);
 		return data;
 	},
 
@@ -146,9 +142,5 @@ externals.lolKing.fn = {
 			data = data.replace(url, '');
 		})
 		return data;
-	},
-
-	getCreepScore: function() {
-
 	}
 };

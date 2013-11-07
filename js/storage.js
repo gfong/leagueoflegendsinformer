@@ -23,10 +23,15 @@ storage.loadSummoners = function(region) {
 	$(view.components.summonerSelectList).html(defaultOption);
 	storage.get(storage.keys.regions, function(result) {
 		var regions = result.regions;
-		var storedRegion = regions[region];
-		var isUndefined = typeof (storedRegion) === 'undefined';
-		if (!isUndefined) {
-			storedRegion.forEach(storage.loadSummoner);
+		if (regions != undefined) {
+			var storedRegion = regions[region];
+			var isUndefined = typeof (storedRegion) === 'undefined';
+			if (!isUndefined) {
+				storedRegion.forEach(storage.loadSummoner);
+			}
+		} else {
+			storage.initRegions();
+			storage.loadSummoners(region);
 		}
 	});
 };
