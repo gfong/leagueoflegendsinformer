@@ -111,7 +111,8 @@ externals.lolKing.fn = {
 		var levelQuery = externals.lolKing.queries.summonerLevel;
 		var queried = queryable.find(levelQuery);
 		var html = queried.html();
-		var summonerLevel = html.match(/Level.[\D\S]*?\d*/g).toString().replace('Level', 'Lv.');
+		var regexMatch = html.match(externals.lolKing.queries.levelRegex)[0];
+		var summonerLevel = regexMatch.replace('Level', 'Lv.');
 		view.generateHtmlForLevel(summoner.name, summonerLevel);
 	},
 
@@ -132,8 +133,8 @@ externals.lolKing.fn = {
 	},
 
 	removeDataTags: function(data) {
-		data = regexFuncs.removeScript(data);
-		data = regexFuncs.removeImg(data);
+		data = utility.regexFuncs.removeScript(data);
+		data = utility.regexFuncs.removeImg(data);
 		return data;
 	},
 

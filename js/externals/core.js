@@ -1,3 +1,7 @@
+/**
+* Contains any functions used across externals
+*/
+
 externals.init = function() {
 	externals.lolcounter.fn.init();
 }

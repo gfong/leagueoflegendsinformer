@@ -8,8 +8,8 @@ externals.lolcounter.fn = {
 		var queries = scope.queries;
 		var request = scope.url + queries.getChampCounters + champion.replace(' ','');
 		$.get(request, function(data) {
-			for(key in regexFuncs) {
-				data = regexFuncs[key](data);
+			for(key in utility.regexFuncs) {
+				data = utility.regexFuncs[key](data);
 			}
 			var queryable = $(data);
 			scope.fn.checkAllStrongs(queryable, team);
@@ -19,10 +19,10 @@ externals.lolcounter.fn = {
 	getChampCounterInfo: function(champion, team) {
 		var scope = externals.lolcounter;
 		var queries = scope.queries;
-		var request = scope.url + queries.getChampCounters + champion.replace(' ','');
+		var request = scope.url + queries.getChampCounters + champion.replace(' ','').replace('\'', '');
 		$.get(request, function(data) {
-			for(key in regexFuncs) {
-				data = regexFuncs[key](data);
+			for(key in utility.regexFuncs) {
+				data = utility.regexFuncs[key](data);
 			}
 			var queryable = $(data);
 			scope.fn.checkAllCounters(queryable, team);

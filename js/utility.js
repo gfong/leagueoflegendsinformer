@@ -1,92 +1,106 @@
 /**
-* Object Builder for Prototyping
+* For the functions without a true home
 */
-objectBuilder = function (proto_object) {
-  var F = function(){};
-  F.prototype = proto_object;
-  return new F();
-};
+var utility = {
 
-generateKeyValuePair = function (key, value) {
-	var pair = { };
-	pair[key] = value;
-	return pair;
-}
+	/**
+	* Object Builder for Prototyping
+	*/
+	objectBuilder: function (proto_object) {
+	  var F = function(){};
+	  F.prototype = proto_object;
+	  return new F();
+	},
 
-logKeyValues = function (name, object) {
-	console.log('Logging keys and values for ' + name);
-	for (key in object) {
-		console.log('Key: ' + key + ', Value: ' + object[key]);
-	}
-	console.log('Finished logging.');
-}
+	/**
+	* Generates a keyValuePair object with the specified key and value
+	*/
+	generateKeyValuePair: function (key, value) {
+		var pair = { };
+		pair[key] = value;
+		return pair;
+	},
 
-/**
-* Functions that involve objects and their properties
-*/
-var objectFuncs = {};
+	/**
+	* Logs each key and value in the specified object
+	*/
+	logKeyValues: function (name, object) {
+		console.log('Logging keys and values for ' + name);
+		for (key in object) {
+			console.log('Key: ' + key + ', Value: ' + object[key]);
+		}
+		console.log('Finished logging.');
+	},
 
-objectFuncs.contains = function (collection, value) {
-	var contains = false;
-	for (key in collection) {
-		if (collection[key] === value) {
-			contains = true;
+	/**
+	* Functions that involve objects and their properties
+	*/
+	objectFuncs: {
+		contains: function (collection, value) {
+			var contains = false;
+			for (key in collection) {
+				if (collection[key] === value) {
+					contains = true;
+				}
+			}
+			return contains;
+		}
+	},
+
+	/**
+	* Functions that involve arrays and their properties
+	*/
+	arrayFuncs: {
+		remove: function (collection, value) {
+			var contains = false;
+
+			for (var i = 0; i < collection.length; i++) {
+				if (collection[i] === value) {
+					contains = true; 
+				}
+				if (contains) {
+					collection[i] = collection[i+1];
+				}
+			}
+			collection.length = collection.length - 1;
+			return contains;
+		},
+
+		removeAtIndex: function (collection, index) {
+			for (var i = index; i < collection.length; i++) {
+					collection[i] = collection[i+1];
+			}
+			collection.length = collection.length - 1;
+		}
+	},
+
+	/**
+	* Functions that use regex
+	*/
+	regexFuncs: {
+		removeScript: function(data) {
+			data = data.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
+			return data;
+		},
+
+		removeImg: function(data) {
+			data = data.replace(/<img\b.*?>/gi, '');
+			return data;
+		},
+
+		removeLink: function(data) {
+			data = data.replace(/<link\b.*?\/?>/gi, '');
+			return data;
+		},
+
+		removeNoScript: function(data) {
+			data = data.replace(/<noscript\b[^<]*(?:(?!<\/noscript>)<[^<]*)*<\/noscript>/gi, '');
+			return data;
+		},
+
+		removeSelect: function(data) {
+			data = data.replace(/<select\b[^<]*(?:(?!<\/select>)<[^<]*)*<\/select>/gi, '');
+			return data;
 		}
 	}
-	return contains;
 }
-
-/**
-* Functions that involve arrays and their properties
-*/
-var arrayFuncs = {};
-
-arrayFuncs.remove = function (collection, value) {
-	var contains = false;
-
-	for (var i = 0; i < collection.length; i++) {
-		if (collection[i] === value) {
-			contains = true; 
-		}
-		if (contains) {
-			collection[i] = collection[i+1];
-		}
-	}
-	collection.length = collection.length - 1;
-	return contains;
-};
-
-arrayFuncs.removeAtIndex = function (collection, index) {
-	for (var i = index; i < collection.length; i++) {
-			collection[i] = collection[i+1];
-	}
-	collection.length = collection.length - 1;
-};
-
-var regexFuncs = {
-	removeScript: function(data) {
-		data = data.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
-		return data;
-	},
-
-	removeImg: function(data) {
-		data = data.replace(/<img\b.*?>/gi, '');
-		return data;
-	},
-
-	removeLink: function(data) {
-		data = data.replace(/<link\b.*?\/?>/gi, '');
-		return data;
-	},
-
-	removeNoScript: function(data) {
-		data = data.replace(/<noscript\b[^<]*(?:(?!<\/noscript>)<[^<]*)*<\/noscript>/gi, '');
-		return data;
-	},
-
-	removeSelect: function(data) {
-		data = data.replace(/<select\b[^<]*(?:(?!<\/select>)<[^<]*)*<\/select>/gi, '');
-		return data;
-	}
-}
-

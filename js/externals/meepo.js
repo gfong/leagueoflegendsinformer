@@ -1,3 +1,7 @@
+/**
+* Functions for manipulating data from the meepo API
+* (not used because not allowed to show API key on client side)
+*/
 externals.lolMeepo.generateSummonerChampionStats = function(summonerObj) {
 	var region = $(view.components.selectedRegion).text().toLowerCase();
 	var root = externals.lolMeepo.url;

@@ -215,6 +215,6 @@ view.handlers = {
 		$(view.components.selectedRegion).removeClass('selected');
 		$(this).addClass('selected');
 		var selectedRegion = $(view.components.selectedRegion).text();
-		storage.loadSummoners(selectedRegion);
+		storage.fn.loadSummoners(selectedRegion);
 	}
 };

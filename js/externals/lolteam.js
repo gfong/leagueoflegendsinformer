@@ -1,3 +1,6 @@
+/**
+* Functions for manipulating data from lolteam.net
+*/
 externals.lolTeam.fn = {
 
 	getSummonerGame: function(region, summoner) {	
@@ -20,15 +23,6 @@ externals.lolTeam.fn = {
 			view.hideStatus();
 			view.displayAlert('An error occurred while retrieving from ' + requestUrl + '.');
 		});
-
-		// $.get(request, function(data, status) {
-		// 	if (status === 'success') {
-		// 		externals.lolTeam.fn.isSummonerInGame(summoner, data);
-		// 	} else {
-		// 		view.hideStatus();
-		// 		view.displayAlert('An error occurred while retrieving from ' + request + '.');
-		// 	}
-		// });
 	},
 
 	doesGameExist: function(data) {
@@ -66,7 +60,7 @@ externals.lolTeam.fn = {
 	},
 
 	generateSummonerFromData: function(teamArray, teamData, name, rankData, champData) {
-		teamArray[teamData.index] = objectBuilder(model.summonerStats);
+		teamArray[teamData.index] = utility.objectBuilder(model.summonerStats);
 		var summonerStats = teamArray[teamData.index];
 		summonerStats.team = teamData.color;
 		summonerStats.teamIndex = teamData.index;
@@ -92,7 +86,7 @@ externals.lolTeam.fn = {
 		var champName = $(data.find(queries.champName))[0].innerHTML;
 		var champGames = $(data.find(queries.champGames)).innerHTML;
 		
-		summonerStats.currentChampionStats = objectBuilder(model.championStats);
+		summonerStats.currentChampionStats = utility.objectBuilder(model.championStats);
 		champStats = summonerStats.currentChampionStats;
 
 		if(data === null || data[0] === undefined) {
@@ -103,7 +97,7 @@ externals.lolTeam.fn = {
 				champStats.playedInRanked = 'Never Played In Ranked';
 			} else {
 				var champPlayedRank = playedInRankedMatch[0];
-				var champKDA = objectBuilder(model.kda);
+				var champKDA = utility.objectBuilder(model.kda);
 				var queriedKDA = $(data.find(queries.champKDA));
 				if (queriedKDA.length > 0) {
 					champKDA.kills = queriedKDA[0].innerHTML;

@@ -84,12 +84,14 @@ header>header>img { margin: 2px auto; display: block;}
 .champion-stats .kda-ratio { }
 .champion-stats .creep-score { float: right; }
 
+/* Blue Team */
 ul.blue-team { margin-right: 2px; }
 ul.blue-team .summoner-name { color: #84B5E7;} /* Old color: #6490d7; */
 ul.blue-team .summoner-name a { color: #84B5E7; text-decoration: none; }
 ul.blue-team .summoner-name a:hover { color: #FFF; }
 ul.blue-team .icon-container { border: 1px solid #6490d7; }
 
+/* Purple Team */
 ul.purple-team { margin-left: 3px; }
 ul.purple-team .summoner-name { color: #B199FA; }
 ul.purple-team .summoner-name a { color: #B199FA; text-decoration: none; }
@@ -108,6 +110,7 @@ input[type=checkbox] { margin-left: 5px; }
 
 footer { margin-top: 2px; font-size: 14px; background-color: #292929; color: #808080; text-align: center; padding: 4px 0 6px; }
 
+/* Status and Alerts */
 .alert-message { padding: 0 5px; cursor: pointer; display: none; min-height: 40px; position: absolute; top: 40%; bottom: 40%; left: 0; right: 0; background-color: rgba(0,0,0,0.75); text-align: center; color: white; padding-top: 1%; }
 
 .overlay { display: none; position: absolute; top: 0; bottom: 0; left: 0; right: 0; background-color: rgba(0,0,0,0.75); }

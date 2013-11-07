@@ -1,3 +1,7 @@
+/**
+* Constants for external interacting functions
+*/
+
 var externals = { };
 
 externals.lolKing = { };
@@ -8,7 +12,8 @@ externals.lolKing.queries = {
 	summonerStats: 		'summoner/',
 	summonerExists: 	'.search_result_item>div>div:nth-child(1)',
 	summonerName: 		'div:nth-child(2)>div:nth-child(2)>div>a',
-	summonerLevel: 		'.summoner_titlebar>div:nth-child(2)>div:nth-child(2)',
+	summonerLevel: 		'.summoner_titlebar',
+	levelRegex: 		/Level.[\D\S]*?\d*/g, 
 	champStats: 		'.season_3_ranked_stats td',
 	normalWins: 		'.lifetime_stats_val',
 	rankedWinsLosses: 	'.featured>div'

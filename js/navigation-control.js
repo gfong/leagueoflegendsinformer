@@ -1,3 +1,7 @@
+/**
+* Controls the navigation for menus
+*/
+
 var navigation = {
 
 	fn: { 
@@ -12,7 +16,7 @@ var navigation = {
 				var checkBoxes = [];
 				var selectedRegion = $(view.components.selectedRegion).text();
 				var checkBoxOpen = "<div><input type=checkbox ";
-				storage.getSummoners(selectedRegion, function(summoners) {
+				storage.fn.getSummoners(selectedRegion, function(summoners) {
 					for (var i = 0; i < summoners.length; i++) {
 						var name = summoners[i];
 						checkBoxes[i] = checkBoxOpen + 'name="' + name + '"" value="' + name +'"">' + name + '</input></div>';
@@ -29,7 +33,7 @@ var navigation = {
 							summonersText += summoner + ' ';
 							var input = 'input[type=checkbox][name="'+summoner+'"]';
 							$(input).parent().remove();
-							storage.removeSummoner(selectedRegion, summoner);
+							storage.fn.removeSummoner(selectedRegion, summoner);
 						}
 						var successMsg = summonersText + ' successfully removed from ' + selectedRegion + ' list!';
 						view.displayAlert(successMsg);
