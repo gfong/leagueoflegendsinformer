@@ -8,22 +8,28 @@ view.templates = { };
 view.templates.summoner = 'templates/_summoner.html';
 view.templates.options = 'templates/_options.html';
 
-view.defaults = { };
-view.defaults.summonerListOption = '<option value="">Select or Add a Summoner</option>';
+view.defaults = { 
+	summonerList: '<option value="">Select or Add a Summoner</option>'+
+	'<optgroup label="In Game" class="in-game"></optgroup>'+
+	'<optgroup label="Not In Game" class="not-in-game"></optgroup>',
+};
 
-view.components = { };
-view.components.regions = '.region-selection a';
-view.components.selectedRegion = '.region-selection a.selected';
-view.components.addSummonerButton = '.summoner-selection input[type=submit]';
-view.components.summonerSelectList = '.summoner-selection select';
-view.components.addSummonerField = '.summoner-selection input[type=text]';
+view.components = { 
+	regions: 			'.region-selection a',
+	selectedRegion: 	'.region-selection a.selected',
+	addSummonerButton: 	'.summoner-selection input[type=submit]',
+	summonerSelectList: '.summoner-selection select',
+	inGameGroup: 		'.in-game',
+	notInGameGroup: 	'.not-in-game',
+	addSummonerField: 	'.summoner-selection input[type=text]',
+	mapInfo: 			'.map-information',
+	content: 			'.content',
+	alert: 				'.alert-message',
+	overlay: 			'.overlay',
+	status: 			'.status-message',
 
-view.components.mapInfo = '.map-information';
-view.components.content = '.content';
-view.components.alert = '.alert-message';
-view.components.overlay = '.overlay';
-view.components.status = '.status-message';
-view.components.cancelButton = '<button>Cancel</button>';
+	cancelButton: 		'<button>Cancel</button>'
+};
 
 view.generateHtmlForLevel = function(summonerName, level) {
 	var editedName = summonerName.split(' ').join('_');
@@ -70,7 +76,7 @@ view.generateHtmlForCreepScore = function(summonerName, creepScore) {
 	$(result).html(creepScore + ' cs');
 };
 
-view.generateUnranked = function(summonerName) {
+view.generateHtmlForUnranked = function(summonerName) {
 	var editedName = summonerName.split(' ').join('_');
 	$('#' + editedName + ' .summoner-stats>.ranked-win-loss-ratio').html('');
 }

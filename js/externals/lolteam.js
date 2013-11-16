@@ -4,36 +4,41 @@
 externals.lolTeam.fn = {
 
 	getSummonerGame: function(region, summoner) {	
-		var editedName = summoner.split(' ').join('%20');
-		var lolTeamScope = externals.lolTeam;
-		var requestUrl = lolTeamScope.url + region + '/' + editedName;
-		var statusMsg = externals.generateRequestMessage(requestUrl);
-		view.displayStatus(statusMsg);
-
-		var request = $.ajax({
-			url: requestUrl,
-			type: "GET"
-		});
-		 
-		request.done(function(data) {
-			externals.lolTeam.fn.isSummonerInGame(summoner, data);
-		});
-		 
-		request.fail(function( jqXHR, textStatus ) {
-			view.hideStatus();
-			view.displayAlert('An error occurred while retrieving from ' + requestUrl + '.');
-		});
+		var functions = externals.lolTeam.fn;
+		functions.isSummonerInGame(region, 
+			summoner, 
+			functions.requestSummonerGame,
+			function(requestUrl) {
+				view.hideStatus();
+				view.displayAlert('An error occurred while retrieving from ' + requestUrl + '.');
+			}
+		)
 	},
 
 	doesGameExist: function(data) {
-		return data != undefined && data[0] != undefined && data[0].innerHTML != undefined;
+		var result = data.find(externals.lolTeam.queries.notInGame);
+		return result == undefined || result[0] == undefined || result[0].innerHTML == undefined;
 	},
 
-	isSummonerInGame: function(summoner, gameData) {
+	isSummonerInGame: function(region, summoner, success, fail) {
+		var editedName = summoner.split(' ').join('%20');
+		var lolTeamScope = externals.lolTeam;
+		var requestUrl = lolTeamScope.url + region + '/' + editedName;
+
+		var request = $.ajax({
+			url: requestUrl,
+			type: "GET",
+		}).done(function(data) {
+			success(summoner, data);
+		}).fail(function(jqXHR, textStatus) {
+			fail(requestUrl);
+		});
+	},
+
+	requestSummonerGame: function(summoner, gameData) {
 		var queries = externals.lolTeam.queries;
 		var scraped = $(gameData);
-		var inGameResult = scraped.find(queries.notInGame);
-		if (externals.lolTeam.fn.doesGameExist(inGameResult)) {
+		if (!externals.lolTeam.fn.doesGameExist(scraped)) {
 			view.hideStatus();
 			view.displayAlert(summoner + ' is currently not in a game!');
 		} else {

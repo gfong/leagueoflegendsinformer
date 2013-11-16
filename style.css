@@ -15,6 +15,10 @@ header>header>img { margin: 2px auto; display: block;}
 .summoner-selection>select,
 .summoner-selection>input { background-color: #333; border: 1px solid #111; border-right-color: #444; border-bottom-color: #444; color: #c4b14e; }
 
+.summoner-selection>select>optgroup.in-game { color: #4D4; }
+.summoner-selection>select>optgroup.not-in-game { color: #D44; }
+.summoner-selection>select>optgroup>option { color: #c4b14e; }
+
 .summoner-selection>select:hover,
 .summoner-selection>input:hover { border: 1px solid #c4b14e; }
 
@@ -105,8 +109,12 @@ ul.purple-team .icon-container { border: 1px solid #B199FA; }
 .content>nav>button:nth-child(2n+1) { margin-left: 5px; margin-right: 3px; }
 .content>nav>button:nth-child(2n) { margin-right:5px;margin-left: 4px;}
 
-.edit-summoners { width: 50%; margin-top: 3px; }
-input[type=checkbox] { margin-left: 5px; }
+.edit-summoners { width: 50%; margin: 5px 0 4px; }
+.edit-summoners>div { padding: 2px 4px; margin: 0 5px; color: #666; cursor: pointer; width: 50%; }
+.edit-summoners>div:hover { color: #FFF; background-color: #1F1F1F; }
+.edit-summoners .delete-button { margin-top: 4px; background-color: #1F1F1F; color: #666; border: 0; padding: 3px 30px; margin-left: 5px; font-size: 12px; }
+.edit-summoners .delete-button:hover { background-color: #292929; color: white; }
+.edit-summoners input[type=checkbox] { display: none; }
 
 footer { margin-top: 2px; font-size: 14px; background-color: #292929; color: #808080; text-align: center; padding: 4px 0 6px; }
 

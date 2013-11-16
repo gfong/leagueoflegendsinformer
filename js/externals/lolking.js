@@ -80,7 +80,7 @@ externals.lolKing.fn = {
 
 
 		var rankedStats = queryable.find(queries.rankedWinsLosses);
-		if (rankedStats[4] != undefined) {
+		if (rankedStats[4] != undefined && rankedStats[5] != undefined) {
 			var rankedWins = $(rankedStats[4]).find('span')[0].innerHTML;
 			var rankedLosses = $(rankedStats[5]).find('span')[0].innerHTML;
 			view.generateHtmlForRankedWinsLosses(summoner.name, rankedWins, rankedLosses);

@@ -20,7 +20,7 @@ var storage = {
 		},
 
 		loadSummoners: function(region) {
-			var defaultOption = view.defaults.summonerListOption;
+			var defaultOption = view.defaults.summonerList;
 			$(view.components.summonerSelectList).html(defaultOption);
 			var regionKey = storage.keys.regions; 
 			storage.fn.get(regionKey, function(result) {
@@ -39,8 +39,23 @@ var storage = {
 		},
 
 		loadSummoner: function(summoner) {
-			var option = '<option value="' + summoner + '">' + summoner + '</option>';
-			$(view.components.summonerSelectList).append(option);
+			var ltFunctions = externals.lolTeam.fn;
+			var selectedRegion = $(view.components.selectedRegion).text();		
+			ltFunctions.isSummonerInGame(selectedRegion, summoner, 
+				function(summoner, data) {			
+					var scraped = $(data);
+					var option = '<option value="' + summoner + '">' + summoner + '</option>';
+					if (ltFunctions.doesGameExist(scraped)) {
+						$(view.components.inGameGroup).append(option);
+					} else {
+						$(view.components.notInGameGroup).append(option);
+					}
+				},
+				function(requestUrl) {
+					view.hideStatus();
+					view.displayAlert('An error occurred while retrieving data from www.lolteam.com.');
+				}
+			);
 		},
 
 		getSummoners: function(region, callback) {
