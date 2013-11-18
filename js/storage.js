@@ -6,6 +6,10 @@ var storage = {
 		regions: 'regions'
 	},
 
+	counters: {
+		loadingSummoners: 0
+	},
+
 	fn: {
 		get: function(item, callback) {
 			chrome.storage.local.get(item, callback);
@@ -20,6 +24,7 @@ var storage = {
 		},
 
 		loadSummoners: function(region) {
+			view.displayStatus("Loading summoners...");
 			var defaultOption = view.defaults.summonerList;
 			$(view.components.summonerSelectList).html(defaultOption);
 			var regionKey = storage.keys.regions; 
@@ -27,9 +32,12 @@ var storage = {
 				var regions = result.regions;
 				if (regions != undefined) {
 					var storedRegion = regions[region];
+					console.log(storedRegion);
 					var isUndefined = typeof (storedRegion) === 'undefined';
 					if (!isUndefined) {
-						storedRegion.forEach(storage.fn.loadSummoner);
+						storedRegion.forEach(function(summoner) {
+							storage.fn.loadSummoner(summoner, storedRegion.length);
+						});
 					}
 				} else {
 					storage.initRegions();
@@ -38,7 +46,7 @@ var storage = {
 			});
 		},
 
-		loadSummoner: function(summoner) {
+		loadSummoner: function(summoner, summonerCount) {
 			var ltFunctions = externals.lolTeam.fn;
 			var selectedRegion = $(view.components.selectedRegion).text();		
 			ltFunctions.isSummonerInGame(selectedRegion, summoner, 
@@ -50,6 +58,11 @@ var storage = {
 					} else {
 						$(view.components.notInGameGroup).append(option);
 					}
+					storage.counters.loadingSummoners++;
+					if (storage.counters.loadingSummoners >= summonerCount) {
+						view.hideStatus();	
+						storage.counters.loadingSummoners = 0;							
+					} 
 				},
 				function(requestUrl) {
 					view.hideStatus();
@@ -74,7 +87,7 @@ var storage = {
 				var regions = result.regions;
 				var size = regions[region].length;
 				if (utility.objectFuncs.contains(regions[region], summoner)) {
-					alert (summoner + ' is already added!');
+					view.displayAlert(summoner + ' is already stored in ' + region + ' list!');
 				} else {
 					regions[region][size] = summoner;
 				  	var pair = utility.generateKeyValuePair(storage.keys.regions, regions);
@@ -85,20 +98,16 @@ var storage = {
 			});
 		},
 
-		removeSummoner: function(region, summoner) {
+		removeSummoners: function(region, summoners) {
 			storage.fn.get(storage.keys.regions, function(result) {
 				var regions = result.regions;
-				if (utility.objectFuncs.contains(regions[region], summoner)) {
-					utility.arrayFuncs.remove(regions[region], summoner);
-				  	var pair = utility.generateKeyValuePair(storage.keys.regions, regions);
-				  	storage.fn.set(pair, function() {
-					  	storage.fn.loadSummoners(region);
-				  	});
-				} else {
-					alert (summoner + ' is not added!');
-				}
+				utility.arrayFuncs.removeCollection(regions[region], summoners);
+			  	var pair = utility.generateKeyValuePair(storage.keys.regions, regions);
+			  	storage.fn.set(pair, function() {
+			  		storage.fn.load(region);
+			  	});
 			});
-		},
+		}
 	},
 
 	initRegions: function() {
@@ -131,6 +140,30 @@ var storage = {
 			if (summonerName && summonerName.length > 0) {
 				externals.lolKing.fn.checkIfSummonerExists(selectedRegion, summonerName, storage.fn.storeSummoner);
 			}
+		},
+
+		deleteSummoner: function() {
+			var selectedRegion = $(view.components.selectedRegion).text();		
+			var selected = $('.edit-summoners input[type=checkbox]:checked');
+			var summonersText = "";
+			var alert = "";
+			if (selected.length > 0) {
+				storage.counters.removeSummoners.max = selected.length;
+				var names = [];
+				for (var i = 0; i < selected.length; i++) {
+					var summoner = $(selected[i]).attr('name');
+					summonersText += summoner;
+					if (i != selected.length) summonersText += ', ';
+					names[i] = summoner;
+					var input = 'input[type=checkbox][name="'+summoner+'"]';
+					$(input).parent().remove();
+				}
+				storage.fn.removeSummoners(selectedRegion, names);
+				alert = summonersText + ' successfully removed from ' + selectedRegion + ' list!';
+			} else {
+				alert = 'No summoners selected to delete!';
+			}
+			view.displayAlert(alert);
 		}
 	},
 

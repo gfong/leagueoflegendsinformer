@@ -45,7 +45,7 @@ header>header>img { margin: 2px auto; display: block;}
 .display-controls>section>button { width: 94px; margin: 0; }
 .display-controls>section>button.detailed { }
 
-.display-controls button { margin-bottom: 0; display: inline-block; font-size: 12px; text-transform: uppercase; padding: 3px 0 4px; text-align: center; color: #636363; background-color: #1c1c1c; border: 0; }
+.display-controls button { cursor: pointer; margin-bottom: 0; display: inline-block; font-size: 12px; text-transform: uppercase; padding: 3px 0 4px; text-align: center; color: #636363; background-color: #1c1c1c; border: 0; }
 .display-controls button.selected, 
 .display-controls button:hover { color: white; background-color: #292929; }
 .display-controls>button { width: 93px; }
@@ -74,10 +74,10 @@ header>header>img { margin: 2px auto; display: block;}
 .champion-stats .icon-overlay.active { }
 
 .champion-stats>header { height: 15px; display: inline-block; width: 144px; }
-.champion-stats>header>.champion-name { color: #c4b14e; display: inline-block; color: ;}
-.champion-stats>header>button { border-color: #999 #666 #666 #999; float: right; display: inline-block; font-size: 9px; text-transform: uppercase; padding: 1px 3px 0; color: #999; background: none; border-width: 1px; } 
+.champion-stats>header>.champion-name { color: #c4b14e; font-size: 12px; float: left; }
+.champion-stats>header>button { border-color: #999 #666 #666 #999; margin: 0; float: right; display: inline-block; font-size: 9px; text-transform: uppercase; padding: 1px 3px 0; color: #999; background: none; border-width: 1px; } 
 
-.champion-stats>section { width: 144px; display:inline-block; padding: 0 3px; height: 26px; }
+.champion-stats>section { width: 144px; display:inline-block; padding: 0 3px; height: 24px; margin-top: -2px; }
 .champion-stats .played-rank, .champion-stats .ranked-win-loss-ratio, .champion-stats .kda-ratio,
 .champion-stats .creep-score { display: inline-block; }
 
@@ -87,6 +87,23 @@ header>header>img { margin: 2px auto; display: block;}
 .champion-stats .ranked-win-loss-ratio .losses.ranked { margin: 0; }
 .champion-stats .kda-ratio { }
 .champion-stats .creep-score { float: right; }
+
+/* Simple View */
+.simple { color: #ccc; }
+.simple>ul>li { height: 77px; overflow: hidden; position: relative; background-color:rgba(0,0,0,0.6);}
+.simple>ul>li>img { top: -5px; right: 0; position: absolute; height: 87px; z-index: -1; }
+
+.simple .summoner-stats { float: left; padding: 0; }
+.simple .summoner-stats>header { width: 98px; background-color: rgba(80,80,80,0.3); }
+.simple .summoner-stats>div { padding: 0 3px; }
+.simple .summoner-stats .level,
+.simple .summoner-stats .wins.normal { display: block; margin: 0; }
+
+.simple .ranked-stats { font-size: 14px; display: block; height: auto; width: 87px; float: right; }
+.simple .ranked-stats>header { width: 81px; background-color: rgba(80,80,80,0.3);;}
+.simple .ranked-stats .rank { text-align: center; float: none; display: block; }
+.simple .ranked-stats>section { padding: 0 3px; float: none; }
+.simple .ranked-stats>div { float: none; width: 100%; padding: 0 3px; }
 
 /* Blue Team */
 ul.blue-team { margin-right: 2px; }
@@ -102,20 +119,26 @@ ul.purple-team .summoner-name a { color: #B199FA; text-decoration: none; }
 ul.purple-team .summoner-name a:hover { color: #FFF; }
 ul.purple-team .icon-container { border: 1px solid #B199FA; }
 
+/* Main Options */
 .content>nav {}
-.content>nav>button { border: 0; color: #777; text-align: center; font-size:12px; text-transform: uppercase; width: 191px; display: inline-block; margin: 4px 0; padding: 4px; background-color: #1F1F1F; }
+.content>nav>button { cursor: pointer; border: 0; color: #777; text-align: center; font-size:12px; text-transform: uppercase; width: 191px; display: inline-block; margin: 4px 0; padding: 4px; background-color: #1F1F1F; }
 .content>nav>button:hover { background-color:#292929; color: white; }
 .content>nav>button:nth-child(-n+2) { margin-top: 8px; }
 .content>nav>button:nth-child(2n+1) { margin-left: 5px; margin-right: 3px; }
 .content>nav>button:nth-child(2n) { margin-right:5px;margin-left: 4px;}
 
-.edit-summoners { width: 50%; margin: 5px 0 4px; }
-.edit-summoners>div { padding: 2px 4px; margin: 0 5px; color: #666; cursor: pointer; width: 50%; }
+/* Edit Summoners */
+.edit-summoners { margin: 3px; }
+.edit-summoners>div { padding: 2px 6px; margin: 3px 3px 2px 2px; color: #666; cursor: pointer; display:inline-block; }
+.edit-summoners>div.selected { color: #AAA; background-color: #1F1F1F; }
 .edit-summoners>div:hover { color: #FFF; background-color: #1F1F1F; }
-.edit-summoners .delete-button { margin-top: 4px; background-color: #1F1F1F; color: #666; border: 0; padding: 3px 30px; margin-left: 5px; font-size: 12px; }
-.edit-summoners .delete-button:hover { background-color: #292929; color: white; }
 .edit-summoners input[type=checkbox] { display: none; }
 
+.edit-summoners .buttons { margin: 1px 0 0; }
+.edit-summoners .delete-button { background-color: #1F1F1F; color: #666; border: 0; padding: 3px 30px; font-size: 12px; }
+.edit-summoners .delete-button:hover { cursor: pointer; background-color: #292929; color: white; }
+
+/* Footer */
 footer { margin-top: 2px; font-size: 14px; background-color: #292929; color: #808080; text-align: center; padding: 4px 0 6px; }
 
 /* Status and Alerts */
@@ -123,6 +146,6 @@ footer { margin-top: 2px; font-size: 14px; background-color: #292929; color: #80
 
 .overlay { display: none; position: absolute; top: 0; bottom: 0; left: 0; right: 0; background-color: rgba(0,0,0,0.75); }
 .overlay .status-message { position: absolute; top: 40%; bottom: 40%; left: 5%; right: 5%; text-align: center; color: white; }
-.overlay .status-message>button { color: white; background: black; border-width: 1px; margin-top: 5px; }
+.overlay .status-message>button { color: white; background: black; border-width: 1px; margin-top: 5px; cursor: pointer; }
 
 .hidden { }

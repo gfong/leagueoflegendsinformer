@@ -25,19 +25,13 @@ var navigation = {
 						data = $(data).prepend(checkBoxes[key]);
 					}
 					$(view.components.content).html(data);
-					$('.edit-summoners .delete-button').click(function() {
-						var selected = $('.edit-summoners input[type=checkbox]:checked');
-						var summonersText = "";
-						for (var i = 0; i < selected.length; i++) {
-							var summoner = $(selected[i]).attr('name');
-							summonersText += summoner + ' ';
-							var input = 'input[type=checkbox][name="'+summoner+'"]';
-							$(input).parent().remove();
-							storage.fn.removeSummoner(selectedRegion, summoner);
-						}
-						var successMsg = summonersText + ' successfully removed from ' + selectedRegion + ' list!';
-						view.displayAlert(successMsg);
+					
+					$('.edit-summoners>div').click(function() {
+						$(this).toggleClass('selected');
+						var checkbox = $(this).find('input');
+						$(checkbox).prop('checked', !$(checkbox).prop('checked'));
 					});
+					$('.edit-summoners .delete-button').click(storage.handlers.deleteSummoner);
 				});
 			});
 		},

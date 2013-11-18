@@ -12,9 +12,10 @@ var lolinformer = {
 
 		$('select').change(function() {
 			var summoner = $('select option:selected').val();
-			var selectedRegion = $(view.components.selectedRegion).text();
-			// externals.lolNexus.getSummonerGame(selectedRegion, summoner);
-			externals.lolTeam.fn.getSummonerGame(selectedRegion, summoner);
+			if (summoner != '') {	
+				var selectedRegion = $(view.components.selectedRegion).text();
+				externals.lolTeam.fn.getSummonerGame(selectedRegion, summoner);
+			}
 		});
 
 		$(view.components.alert).click(view.handlers.alertClick);

@@ -155,7 +155,7 @@ model.champions = {
   'Lee Sin':      64,
   'Vayne':        67,
   'Rumble':       68,
-  'Casseiopia':   69,
+  'Cassiopeia':   69,
   'Skarner':      72,
   'Heimerdinger': 74,
   'Nasus':        75,

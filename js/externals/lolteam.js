@@ -12,7 +12,7 @@ externals.lolTeam.fn = {
 				view.hideStatus();
 				view.displayAlert('An error occurred while retrieving from ' + requestUrl + '.');
 			}
-		)
+		);
 	},
 
 	doesGameExist: function(data) {
@@ -24,7 +24,7 @@ externals.lolTeam.fn = {
 		var editedName = summoner.split(' ').join('%20');
 		var lolTeamScope = externals.lolTeam;
 		var requestUrl = lolTeamScope.url + region + '/' + editedName;
-
+		view.displayStatus('Getting game information...');
 		var request = $.ajax({
 			url: requestUrl,
 			type: "GET",

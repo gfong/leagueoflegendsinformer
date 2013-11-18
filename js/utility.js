@@ -62,15 +62,36 @@ var utility = {
 					collection[i] = collection[i+1];
 				}
 			}
-			collection.length = collection.length - 1;
+			collection.length -= 1;
 			return contains;
 		},
 
+		/*
+		* Removes an element at the specified index
+		*/
 		removeAtIndex: function (collection, index) {
 			for (var i = index; i < collection.length; i++) {
 					collection[i] = collection[i+1];
 			}
-			collection.length = collection.length - 1;
+			collection.length -= 1;
+		},
+
+		/*
+		* Removes a subcollection from a collection
+		*/
+		removeCollection: function(collection, toRemove) {
+			for (var i = 0; i < toRemove.length; i++) {
+				var found = false;
+				for (var j = 0; j < collection.length; j++) {
+					if (collection[j] === toRemove[i]) {
+						found = true;
+					}
+					if (found) {
+						collection[j] = collection[j + 1];
+					}
+				}
+				if (found) collection.length -= 1;
+			}
 		}
 	},
 
